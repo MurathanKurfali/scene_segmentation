@@ -14,9 +14,9 @@ export MODEL_TYPE=bert
 # export MODEL_TYPE=roberta
 
 # path to dataset files
-export TRAIN_PATH=data/CSAbstruct/train.jsonl
-export DEV_PATH=data/CSAbstruct/dev.jsonl
-export TEST_PATH=data/CSAbstruct/test.jsonl
+export TRAIN_PATH=data/trial/train.jsonl
+export DEV_PATH=data/trial/dev.jsonl
+export TEST_PATH=data/trial/test.jsonl
 
 # model
 export USE_SEP=true  # true for our model. false for baseline
