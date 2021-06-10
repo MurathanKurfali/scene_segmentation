@@ -182,11 +182,11 @@ class SeqClassificationModel(Model):
         if self.labels_are_scores:
             label_probs = label_logits
         else:
-            label_probs = torch.nn.functional.softmax(label_logits, dim=-1)
+            label_probs = torch.nn.functional.softmax(label_logits, dim=-1).detach().cpu().numpy()
 
         # Create output dictionary for the trainer
         # Compute loss and epoch metrics
-        predicted_labels_out = [self.vocab.get_token_from_index(namespace='labels', index=np.argmax(instance_props.detach().cpu().numpy()).item()) for instance_props in label_probs[0]]
+        predicted_labels_out = [self.vocab.get_token_from_index(namespace='labels', index=np.argmax(instance_props).item()) for instance_props in label_probs[0]]
         output_dict = {"labels": [predicted_labels_out], "action_probs": label_probs}
 
         # =====================================================================
