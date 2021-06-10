@@ -12,7 +12,7 @@ all_labels = []
 
 def read_json(json_file, out_dir):
     content = json.load(open(json_file, ))
-    sentences, labels,  = [], []
+    sentences, labels, = [], []
     selected = {"Scene": [], "Nonscene": []}
     scene_borders = {range(k["begin"], k["end"]): k["type"] for k in content["scenes"]}
     batch_length = []
@@ -42,21 +42,22 @@ def read_json(json_file, out_dir):
             batch = {"abstract_id": 0}
             batch.update({"sentences": sentences[index:index + batch_size], "labels": labels[index:index + batch_size]})
             batch_length.append(len(" ".join(sentences[index:index + batch_size]).split()))
-            #batch = {"labels": labels[index:index + batch_size]}
+            # batch = {"labels": labels[index:index + batch_size]}
             json.dump(batch, outfile)
             outfile.write('\n')
     print(max(batch_length), min(batch_length))
 
+
 if __name__ == "__main__":
 
-    raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else  "../ebooks/json"
+    raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
     out_dir = "../data/trial"
     if os.path.exists(out_dir): shutil.rmtree(out_dir)
     os.makedirs(out_dir)
 
     raw_books = [os.path.join(raw_data, l) for l in os.listdir(raw_data)]
     for book in raw_books:
-        #if "9783732557905" not in book: continue
+        # if "9783732557905" not in book: continue
         read_json(book, out_dir)
     total = sum(Counter(all_labels).values())
-    print([ (k, total/v) for k,v in Counter(all_labels).items()])
+    print([(k, total / v) for k, v in Counter(all_labels).items()])
