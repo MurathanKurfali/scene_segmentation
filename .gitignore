@@ -3,5 +3,6 @@ tmp
 .vscode
 ebooks/
 data/trial
+data/predictions
 ebooks/
 xx

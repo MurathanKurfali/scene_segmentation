@@ -5,7 +5,7 @@ export PYTORCH_SEED=`expr $SEED / 10`
 export NUMPY_SEED=`expr $PYTORCH_SEED / 10`
 
 # path to bert type and path
-export BERT_MODEL=bert-base-german-cased
+export BERT_MODEL=deepset/gbert-large
 export TOKEN=[SEP]
 export MODEL_TYPE=bert
 
@@ -25,20 +25,19 @@ export WITH_CRF=false  # CRF only works for the baseline
 # training params
 export cuda_device=0
 export BATCH_SIZE=4 # set one for roberta
-export LR=3e-5
+export LR=2e-6
 #export TRAINING_DATA_INSTANCES=1668
 export TRAINING_STEPS=1000
 export NUM_EPOCHS=50
 
 # limit number of sentneces per examples, and number of words per sentence. This is dataset dependant
-export MAX_SENT_PER_EXAMPLE=12
-export SENT_MAX_LEN=50
+export MAX_SENT_PER_EXAMPLE=10
+export SENT_MAX_LEN=60
 
 # this is for the evaluation of the summarization dataset
 export SCI_SUM=false
 export USE_ABSTRACT_SCORES=false
 export SCI_SUM_FAKE_SCORES=false  # use fake scores for testing
 
-CONFIG_FILE=sequential_sentence_classification/config.jsonnet
-rm -rf xx
-python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s $SERIALIZATION_DIR "xx"
+predict_file=data/predictions/pred.json
+python -m allennlp predict xx data/trial/test.jsonl --output-file ${predict_file} --silent --use-dataset-reader --predictor SeqClassificationPredictor --include-package sequential_sentence_classification

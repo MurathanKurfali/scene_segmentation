@@ -182,8 +182,9 @@ class SeqClassificationReader(DatasetReader):
                          labels: List[str] = None,
                          confidences: List[float] = None,
                          additional_features: List[float] = None,
+                         predict: bool = False,
                          ) -> Instance:
-        if not self.predict:
+        if not self.predict and not predict:
             assert len(sentences) == len(labels)
         if confidences is not None:
             assert len(sentences) == len(confidences)

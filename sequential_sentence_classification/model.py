@@ -13,6 +13,7 @@ from allennlp.modules.conditional_random_field import ConditionalRandomField
 
 logger = logging.getLogger(__name__)
 
+
 @Model.register("SeqClassificationModel")
 class SeqClassificationModel(Model):
     """
@@ -34,7 +35,7 @@ class SeqClassificationModel(Model):
 
         self.text_field_embedder = text_field_embedder
         self.vocab = vocab
-        #print( self.vocab.get_token_from_index(namespace='labels', index=0))
+        # print( self.vocab.get_token_from_index(namespace='labels', index=0))
         self.use_sep = use_sep
         self.with_crf = with_crf
         self.sci_sum = sci_sum
@@ -93,7 +94,7 @@ class SeqClassificationModel(Model):
         # Output: embedded_sentences
 
         # embedded_sentences: batch_size, num_sentences, sentence_length, embedding_size
-        embedded_sentences = self.text_field_embedder(sentences, num_wrapping_dims= 1)
+        embedded_sentences = self.text_field_embedder(sentences, num_wrapping_dims=1)
         mask = get_text_field_mask(sentences, num_wrapping_dims=1).float()
         batch_size, num_sentences, _, _ = embedded_sentences.size()
 
@@ -101,18 +102,18 @@ class SeqClassificationModel(Model):
             # The following code collects vectors of the SEP tokens from all the examples in the batch,
             # and arrange them in one list. It does the same for the labels and confidences.
             # TODO: replace 103 with '[SEP]'
-            index_sep = int(self.vocab.get_token_index(token=self.token, namespace = "tags"))
-            sentences_mask = sentences['bert']["token_ids"] == index_sep # mask for all the SEP tokens in the batch
+            index_sep = int(self.vocab.get_token_index(token=self.token, namespace="tags"))
+            sentences_mask = sentences['bert']["token_ids"] == index_sep  # mask for all the SEP tokens in the batch
             embedded_sentences = embedded_sentences[sentences_mask]  # given batch_size x num_sentences_per_example x sent_len x vector_len
-                                                                        # returns num_sentences_per_batch x vector_len
+            # returns num_sentences_per_batch x vector_len
             ## roberta only WORKS ONLY IF BATCH SIZE == 1
-            if self.model_type == "roberta" :            
-                assert batch_size == 1, "set batch size to 1 for RoBERTa"                                               
+            if self.model_type == "roberta":
+                assert batch_size == 1, "set batch size to 1 for RoBERTa"
                 indx = np.arange(embedded_sentences.shape[0])
-                device = "cuda" 
-                sel_idx = torch.from_numpy(indx[indx%2==0]).to(device)# select only scond intersentence marker
+                device = "cuda"
+                sel_idx = torch.from_numpy(indx[indx % 2 == 0]).to(device)  # select only scond intersentence marker
                 embedded_sentences = torch.index_select(embedded_sentences, 0, sel_idx)
-            
+
             assert embedded_sentences.dim() == 2
             num_sentences = embedded_sentences.shape[0]
             # for the rest of the code in this model to work, think of the data we have as one example
@@ -141,8 +142,8 @@ class SeqClassificationModel(Model):
                     assert num_labels > num_sentences  # but `num_labels` should be at least greater than `num_sentences`
                     logger.warning(f'Found {num_labels} labels but {num_sentences} sentences')
                     labels = labels[:num_sentences]  # Ignore some labels. This is ok for training but bad for testing.
-                                                        # We are ignoring this problem for now.
-                                                        # TODO: fix, at least for testing
+                    # We are ignoring this problem for now.
+                    # TODO: fix, at least for testing
 
                 # do the same for `confidences`
                 if confidences is not None:
@@ -185,7 +186,8 @@ class SeqClassificationModel(Model):
 
         # Create output dictionary for the trainer
         # Compute loss and epoch metrics
-        output_dict = {"action_probs": label_probs}
+        predicted_labels_out = [self.vocab.get_token_from_index(namespace='labels', index=np.argmax(instance_props).item()) for instance_props in label_probs[0]]
+        output_dict = {"labels": [predicted_labels_out], "action_probs": label_probs}
 
         # =====================================================================
 
@@ -236,7 +238,7 @@ class SeqClassificationModel(Model):
                     label_name = self.vocab.get_token_from_index(namespace='labels', index=label_index)
                     metric = self.label_f1_metrics[label_name]
                     metric(flattened_probs, flattened_gold, mask=evaluation_mask)
-        
+
         if labels is not None:
             output_dict["loss"] = label_loss
         output_dict['action_logits'] = label_logits
