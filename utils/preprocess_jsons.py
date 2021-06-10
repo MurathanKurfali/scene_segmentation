@@ -58,4 +58,5 @@ if __name__ == "__main__":
     for book in raw_books:
         #if "9783732557905" not in book: continue
         read_json(book, out_dir)
-    print(Counter(all_labels))
+    total = sum(Counter(all_labels).values())
+    print([ (k, total/v) for k,v in Counter(all_labels).items()])

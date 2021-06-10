@@ -62,7 +62,6 @@ class SeqClassificationReader(DatasetReader):
 
     def _read(self, file_path: str):
         file_path = cached_path(file_path)
-
         with open(file_path) as f:
             for line in self.shard_iterable(f):
                 json_dict = json.loads(line)
@@ -82,7 +81,7 @@ class SeqClassificationReader(DatasetReader):
         confidences = json_dict.get("confs", None)
 
         additional_features = None
-        if self.sci_sum:
+        if False and self.sci_sum:
             if self.sci_sum_fake_scores:
                 labels = [np.random.rand() for _ in sentences]
             else: 
@@ -234,7 +233,6 @@ class SeqClassificationReader(DatasetReader):
                     fields["labels"] = ListField([
                             LabelField(str(label)+"_label") for label in labels
                         ])
-
         if confidences is not None:
             fields['confidences'] = ArrayField(np.array(confidences))
         if additional_features is not None:

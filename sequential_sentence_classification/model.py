@@ -34,6 +34,7 @@ class SeqClassificationModel(Model):
 
         self.text_field_embedder = text_field_embedder
         self.vocab = vocab
+        #print( self.vocab.get_token_from_index(namespace='labels', index=0))
         self.use_sep = use_sep
         self.with_crf = with_crf
         self.sci_sum = sci_sum
@@ -43,13 +44,13 @@ class SeqClassificationModel(Model):
         self.model_type = model_type
         self.dropout = torch.nn.Dropout(p=bert_dropout)
 
-       # define loss
+        # define loss
         if self.sci_sum:
             self.loss = torch.nn.MSELoss(reduction='none')  # labels are rouge scores
             self.labels_are_scores = True
             self.num_labels = 1
         else:
-            self.loss = torch.nn.CrossEntropyLoss(ignore_index=-1, reduction='none')
+            self.loss = torch.nn.CrossEntropyLoss(ignore_index=-1, weight=torch.tensor([1, 46, 60, 855], dtype=torch.float), reduction='none')
             self.labels_are_scores = False
             self.num_labels = self.vocab.get_vocab_size(namespace='labels')
             # define accuracy metrics
