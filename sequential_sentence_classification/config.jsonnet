@@ -27,7 +27,7 @@ local boolToInt(s) =
             }
         },
         "sent_max_len": std.parseInt(std.extVar("SENT_MAX_LEN")),
-        "max_sent_per_example": 10,
+        "max_sent_per_example": std.parseInt(std.extVar("MAX_SENT_PER_EXAMPLE")),
         "use_sep": stringToBool(std.extVar("USE_SEP")),
         "sci_sum": stringToBool(std.extVar("SCI_SUM")),
         "use_abstract_scores": stringToBool(std.extVar("USE_ABSTRACT_SCORES")),
@@ -72,10 +72,10 @@ local boolToInt(s) =
   "trainer": {
     "num_epochs": std.parseInt(std.extVar("NUM_EPOCHS")),
     "grad_clipping": 1.0,
-    "patience": 5,
+    "patience": 25,
     "validation_metric": if stringToBool(std.extVar("SCI_SUM")) then "-loss" else '+acc',
     "cuda_device": std.parseInt(std.extVar("cuda_device")),
-    "num_gradient_accumulation_steps": 32,
+    "num_gradient_accumulation_steps": 2,
     "optimizer": {
       "type": "huggingface_adamw",
       "lr": std.parseJson(std.extVar("LR")),
