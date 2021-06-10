@@ -25,7 +25,7 @@ export WITH_CRF=false  # CRF only works for the baseline
 # training params
 export cuda_device=0
 export BATCH_SIZE=4 # set one for roberta
-export LR=2e-6
+export LR=5e-6
 #export TRAINING_DATA_INSTANCES=1668
 export TRAINING_STEPS=1000
 export NUM_EPOCHS=50
