@@ -41,8 +41,7 @@ def read_json(json_file, out_dir):
     split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
     with open(os.path.join(out_dir, split), 'a+', encoding="utf8") as outfile:
         for index in range(0, len(sentences), batch_size):
-            batch = {"abstract_id": 0}
-            batch.update({"sentences": sentences[index:index + batch_size], "indices": indices[index:index + batch_size] , "labels": labels[index:index + batch_size]})
+            batch = {"sentences": sentences[index:index + batch_size], "indices": indices[index:index + batch_size] , "labels": labels[index:index + batch_size]}
             batch.update({"file": json_file.split("/")[-1]})
             batch_length.append(len(" ".join(sentences[index:index + batch_size]).split()))
             # batch = {"labels": labels[index:index + batch_size]}
