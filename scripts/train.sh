@@ -5,7 +5,7 @@ export PYTORCH_SEED=`expr $SEED / 10`
 export NUMPY_SEED=`expr $PYTORCH_SEED / 10`
 
 # path to bert type and path
-export BERT_MODEL=bert-base-german-cased
+export BERT_MODEL=deepset/gbert-large #bert-base-german-cased
 export TOKEN=[SEP]
 export MODEL_TYPE=bert
 
