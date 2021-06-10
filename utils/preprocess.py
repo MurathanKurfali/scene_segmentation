@@ -12,7 +12,7 @@ all_labels = []
 
 def read_json(json_file, out_dir):
     content = json.load(open(json_file, ))
-    sentences, labels, = [], []
+    sentences, labels, indices = [], [], []
     selected = {"Scene": [], "Nonscene": []}
     scene_borders = {range(k["begin"], k["end"]): k["type"] for k in content["scenes"]}
     batch_length = []
@@ -33,6 +33,8 @@ def read_json(json_file, out_dir):
             label = "Nonscene"
             continue
         sentences.append(content["text"][sent["begin"]:sent["end"]])
+        indices.append((sent["begin"],sent["end"]))
+
         labels.append(label)
     all_labels.extend(labels)
     print(json_file, Counter(labels))
@@ -40,7 +42,8 @@ def read_json(json_file, out_dir):
     with open(os.path.join(out_dir, split), 'a+', encoding="utf8") as outfile:
         for index in range(0, len(sentences), batch_size):
             batch = {"abstract_id": 0}
-            batch.update({"sentences": sentences[index:index + batch_size], "labels": labels[index:index + batch_size]})
+            batch.update({"sentences": sentences[index:index + batch_size], "indices": indices[index:index + batch_size] , "labels": labels[index:index + batch_size]})
+            batch.update({"file": json_file.split("/")[-1]})
             batch_length.append(len(" ".join(sentences[index:index + batch_size]).split()))
             # batch = {"labels": labels[index:index + batch_size]}
             json.dump(batch, outfile)
