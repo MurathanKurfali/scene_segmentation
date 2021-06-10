@@ -50,7 +50,7 @@ def read_json(json_file, out_dir):
 
 if __name__ == "__main__":
 
-    raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
+    pred_file = "data/predictions/pred.json"
     out_dir = "../data/trial"
     if os.path.exists(out_dir): shutil.rmtree(out_dir)
     os.makedirs(out_dir)
