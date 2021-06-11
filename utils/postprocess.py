@@ -41,9 +41,10 @@ if __name__ == "__main__":
             group = [x[1]]
         else:
             if "-B" in l:
-                initial_punc_count = len(original_file["text"][last_border:group[-1][-1]]) - len(original_file["text"][last_border:group[-1][-1]].rstrip(string.punctuation + "»"))
+                initial_punc_count = len(original_file["text"][last_border:group[-1][-1]]) - len(original_file["text"][last_border:group[-1][-1]].lstrip(" "))
+                e = len(original_file["text"][last_border:group[-1][-1]]) - len(original_file["text"][last_border:group[-1][-1]].rstrip("  "))
 
-                grouped.append( {"begin":last_border, "end": group[-1][-1] - initial_punc_count, "type": prev_l})
+                grouped.append({"begin": last_border, "end": group[-1][-1]-e, "type": prev_l})
                 group = [x[1]]
                 last_border = grouped[-1]["end"]
                 prev_l = l.replace("-B", "")
@@ -51,8 +52,8 @@ if __name__ == "__main__":
                 if l == prev_l:
                     group.append(x[1])
                 else:
-                    initial_punc_count = len(original_file["text"][last_border:group[-1][-1]]) - len(original_file["text"][last_border:group[-1][-1]].rstrip(string.punctuation + "»"))
-                    grouped.append({"begin": last_border, "end": group[-1][-1] - initial_punc_count, "type": prev_l})
+                    e = len(original_file["text"][last_border:group[-1][-1]]) - len(original_file["text"][last_border:group[-1][-1]].rstrip("  "))
+                    grouped.append({"begin": last_border, "end": group[-1][-1] - e, "type": prev_l})
                     group = [x[1]]
                     last_border = grouped[-1]["end"]
                     prev_l = l.replace("-B", "")

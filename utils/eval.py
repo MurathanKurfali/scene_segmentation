@@ -43,11 +43,22 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
     max_index = len(data["gold"]["text"])
     gold_labels = np.zeros(max_index)
     pred_labels = np.zeros(max_index)
+    limit = -1
 
     for boundary in boundaries["pred"]:
         pred_labels[boundary[0]] = label_to_int[boundary[1]]
+        if limit > 0:
+            for i in range(-limit,limit):
+                pred_labels[boundary[0]+i] = label_to_int[boundary[1]]
+
+
+
     for boundary in boundaries["gold"]:
         gold_labels[boundary[0]] = label_to_int[boundary[1]]
+        if limit > 0:
+            for i in range(-limit,limit):
+                gold_labels[boundary[0] + i] = label_to_int[boundary[1]]
+
     int_to_labels = {value: key for key, value in label_to_int.items()}
 
     info(classification_report(y_true=gold_labels, y_pred=pred_labels,
