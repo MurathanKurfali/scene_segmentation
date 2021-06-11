@@ -75,7 +75,7 @@ local boolToInt(s) =
     "patience": 25,
     "validation_metric": if stringToBool(std.extVar("SCI_SUM")) then "-loss" else '+avgF',
     "cuda_device": std.parseInt(std.extVar("cuda_device")),
-    "num_gradient_accumulation_steps": 2,
+    "num_gradient_accumulation_steps": 4,
     "optimizer": {
       "type": "huggingface_adamw",
       "lr": std.parseJson(std.extVar("LR")),
