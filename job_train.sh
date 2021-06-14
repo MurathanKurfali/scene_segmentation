@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH --gpus-per-node=V100:1
-#SBATCH -t 0-1:00:00
+#SBATCH -t 1-0:00:00
 
 #SBATCH --output=logs/train-%j.out
 
