@@ -6,7 +6,8 @@ from collections import Counter
 
 batch_size = 3
 
-split_dict = {"9783740950484.json": "dev.jsonl", "9783732586875.json": "test.jsonl"}
+test_file="9783732586875.json"
+split_dict = {"9783740950484.json": "dev.jsonl", test_file: "test.jsonl"}
 all_labels = []
 
 

@@ -9,6 +9,8 @@ from typing import Dict
 import numpy as np
 from sklearn.metrics import f1_score, classification_report, confusion_matrix
 
+from preprocess import test_file
+
 logging.getLogger().setLevel(logging.DEBUG)
 
 
@@ -74,7 +76,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
     f1_scores = []
 
     for gold_file in gold_dir.iterdir():
-        if "9783732522033" not in str(gold_file): continue
+        if test_file.split(".json")[0] not in str(gold_file): continue
         pred_file = pred_dir.joinpath(gold_file.name)
 
         if not pred_file.is_file():

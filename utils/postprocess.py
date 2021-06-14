@@ -1,10 +1,7 @@
 import itertools
-import os
 import json
-import shutil
-import string
-from collections import Counter
 import jsonlines
+from preprocess import test_file
 
 
 def read_jsonlines(file_path):
@@ -16,13 +13,12 @@ def read_jsonlines(file_path):
 
 
 if __name__ == "__main__":
-    pred_file_path = "../data/predictions/9783732522033.json"
-    #pred_file_path = "../data/ss/test.jsonl"
+    pred_file_path = "../data/predictions/{}".format(test_file)
+    # pred_file_path = "../data/ss/test.jsonl"
 
     test_file_path = "../data/ss/test.jsonl"
-    out_dir = "../data/output/9783732522033.json"
-    original_file_path = "/home/murathan/Desktop/scene-segmentation/json/9783732522033.json"
-
+    out_dir = "../data/output/{}".format(test_file)
+    original_file_path = "/home/murathan/Desktop/scene-segmentation/json/{}".format(test_file)
 
     original_file = json.load(open(original_file_path))
     pred, test = read_jsonlines(pred_file_path), read_jsonlines(test_file_path)
@@ -31,18 +27,14 @@ if __name__ == "__main__":
     grouped = []
     labels = list(zip(labels, indicies))
     group = {}
-    last_border= 0
+    last_border = 0
     for i, x in enumerate(labels):
-        if i > 2600:
-            print()
         l = x[0].replace("_label", "")
         if i == 0:
             prev_l = l.replace("-B", "")
             group = [x[1]]
         else:
             if "-B" in l:
-                initial_punc_count = len(original_file["text"][last_border:group[-1][-1]]) - len(original_file["text"][last_border:group[-1][-1]].lstrip(" "))
-
                 grouped.append({"begin": last_border, "end": group[-1][-1], "type": prev_l})
                 group = [x[1]]
                 last_border = grouped[-1]["end"]
