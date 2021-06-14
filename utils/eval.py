@@ -51,8 +51,6 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
             for i in range(-limit,limit):
                 pred_labels[boundary[0]+i] = label_to_int[boundary[1]]
 
-
-
     for boundary in boundaries["gold"]:
         gold_labels[boundary[0]] = label_to_int[boundary[1]]
         if limit > 0:
