@@ -1,4 +1,5 @@
 import json
+import os
 from collections import deque, defaultdict
 import logging
 from logging import info
@@ -45,19 +46,12 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
     max_index = len(data["gold"]["text"])
     gold_labels = np.zeros(max_index)
     pred_labels = np.zeros(max_index)
-    limit = -1
 
     for boundary in boundaries["pred"]:
         pred_labels[boundary[0]] = label_to_int[boundary[1]]
-        if limit > 0:
-            for i in range(-limit,limit):
-                pred_labels[boundary[0]+i] = label_to_int[boundary[1]]
 
     for boundary in boundaries["gold"]:
         gold_labels[boundary[0]] = label_to_int[boundary[1]]
-        if limit > 0:
-            for i in range(-limit,limit):
-                gold_labels[boundary[0] + i] = label_to_int[boundary[1]]
 
     int_to_labels = {value: key for key, value in label_to_int.items()}
 
@@ -92,10 +86,8 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 
 if __name__ == '__main__':
-    gold_dir = Path("/home/murathan/Desktop/scene-segmentation/json")
-    #pred_dir = Path("/home/murathan/Desktop/scene-segmentation/json")
-
-    pred_dir = Path("/home/murathan/PycharmProjects/sequential_sentence_classification/data/output")
+    gold_dir = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
+    pred_dir = Path("data/predictions")
 
     eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
 

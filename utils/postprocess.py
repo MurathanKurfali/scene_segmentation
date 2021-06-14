@@ -1,5 +1,7 @@
 import itertools
 import json
+import os
+
 import jsonlines
 from preprocess import test_file
 
@@ -13,42 +15,45 @@ def read_jsonlines(file_path):
 
 
 if __name__ == "__main__":
-    pred_file_path = "../data/predictions/{}".format(test_file)
-    # pred_file_path = "../data/ss/test.jsonl"
+    pred_file_path = "../data/predictions/{}.pred".format(test_file)
+    out_file = "../data/predictions/{}".format(test_file)
+    raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
 
-    test_file_path = "../data/ss/test.jsonl"
-    out_dir = "../data/output/{}".format(test_file)
-    original_file_path = "/home/murathan/Desktop/scene-segmentation/json/{}".format(test_file)
+    original_file_path = "{}/{}".format(raw_data, test_file)
 
     original_file = json.load(open(original_file_path))
-    pred, test = read_jsonlines(pred_file_path), read_jsonlines(test_file_path)
+    pred = read_jsonlines(pred_file_path)
     labels = list(itertools.chain(*[line["labels"] for line in pred]))
     indicies = [(line["begin"], line["end"]) for line in original_file["sentences"]]
-    grouped = []
+    scenes = []
     labels = list(zip(labels, indicies))
     group = {}
     last_border = 0
-    for i, x in enumerate(labels):
-        l = x[0].replace("_label", "")
+    for i, label_offset in enumerate(labels):
+        label, offset = label_offset[0].replace("_label", ""), label_offset[1]
         if i == 0:
-            prev_l = l.replace("-B", "")
-            group = [x[1]]
+            prev_l = label.replace("-B", "")
+            group = [offset]
         else:
-            if "-B" in l:
-                grouped.append({"begin": last_border, "end": group[-1][-1], "type": prev_l})
-                group = [x[1]]
-                last_border = grouped[-1]["end"]
-                prev_l = l.replace("-B", "")
+            if "-B" in label:
+                # Non-scene to non-scene change is not allowed so continue expanding last non-scene despite
+                # prediction of Nonscene-B label
+                if label == "Nonscene-B" and prev_l == "Nonscene":
+                    group.append(offset)
+                else:  # scene change due to prediction of -B label
+                    scenes.append({"begin": last_border, "end": group[-1][-1], "type": prev_l})
+                    group = [offset]
+                    last_border = scenes[-1]["end"]
+                    prev_l = label.replace("-B", "")
             else:
-                if l == prev_l:
-                    group.append(x[1])
-                else:
-                    grouped.append({"begin": last_border, "end": group[-1][-1], "type": prev_l})
-                    group = [x[1]]
-                    last_border = grouped[-1]["end"]
-                    prev_l = l.replace("-B", "")
+                if label == prev_l:
+                    group.append(offset)
+                else:  # scene change despite lack of -B label
+                    scenes.append({"begin": last_border, "end": group[-1][-1], "type": prev_l})
+                    group = [offset]
+                    last_border = scenes[-1]["end"]
+                    prev_l = label.replace("-B", "")
+    print(scenes)
+    output = {"text": original_file["text"], "scenes": scenes}
 
-    print(grouped)
-    output = {"text": original_file["text"], "scenes": grouped}
-
-    json.dump(output, open(out_dir, "w"))
+    json.dump(output, open(out_file, "w"))
