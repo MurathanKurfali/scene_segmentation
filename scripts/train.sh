@@ -39,36 +39,15 @@ export USE_ABSTRACT_SCORES=false
 export SCI_SUM_FAKE_SCORES=false  # use fake scores for testing
 
 CONFIG_FILE=sequential_sentence_classification/config.jsonnet
-
-sent_count=20
-length=50
-out_folder="large_${sent_count}_${length}_5e"
-rm -rf ${out_folder}
-export MAX_SENT_PER_EXAMPLE=${sent_count}
-export SENT_MAX_LEN=${length}
-python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
-
-sent_count=20
-length=40
-out_folder="large_${sent_count}_${length}_5e"
-rm -rf ${out_folder}
-export MAX_SENT_PER_EXAMPLE=${sent_count}
-export SENT_MAX_LEN=${length}
-python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
-
-sent_count=25
-length=25
-out_folder="large_${sent_count}_${length}_5e"
-rm -rf ${out_folder}
-export MAX_SENT_PER_EXAMPLE=${sent_count}
-export SENT_MAX_LEN=${length}
-python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
-
-
-sent_count=50
-length=20
-out_folder="large_${sent_count}_${length}_5e"
-rm -rf ${out_folder}
-export MAX_SENT_PER_EXAMPLE=${sent_count}
-export SENT_MAX_LEN=${length}
-python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
+if [ $# -ne 2 ]
+  then
+    echo "Illegal number of parameters"
+  else
+    sent_count=$1
+    length=$2
+    out_folder="large_${sent_count}_${length}_5e"
+    rm -rf "${out_folder}"
+    export MAX_SENT_PER_EXAMPLE=${sent_count}
+    export SENT_MAX_LEN=${length}
+    python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
+fi

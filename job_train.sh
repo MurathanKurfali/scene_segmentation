@@ -10,6 +10,6 @@ module load Python/3.7.4
 
 source /cephyr/users/murathan/Alvis/deep/bin/activate
 
-out_dir="xx"
-rm -rf ${out_dir}
-./scripts/train.sh ${out_dir}
+
+echo "Sentence count: ${1}   length: ${2}"
+./scripts/train.sh $1 $2
