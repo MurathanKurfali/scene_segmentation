@@ -12,4 +12,4 @@ source /cephyr/users/murathan/Alvis/deep/bin/activate
 
 
 echo "Sentence count: ${1}   length: ${2}"
-./scripts/train.sh $1 $2
+./scripts/train.sh "$1" "$2"
