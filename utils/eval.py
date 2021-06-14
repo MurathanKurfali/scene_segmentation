@@ -86,7 +86,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 
 if __name__ == '__main__':
-    gold_dir = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
+    gold_dir = Path("/home/murathan/Desktop/scene-segmentation/json") if "home/" in os.getcwd() else  Path("/cephyr/users/murathan/Alvis/scene-segmentation/json")
     pred_dir = Path("data/predictions")
 
     eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
