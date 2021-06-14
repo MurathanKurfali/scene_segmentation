@@ -4,7 +4,7 @@ import shutil
 import string
 from collections import Counter
 
-batch_size = 10
+batch_size = 3
 
 split_dict = {"9783740950484.json": "dev.jsonl", "9783732586875.json": "test.jsonl"}
 all_labels = []
@@ -30,23 +30,20 @@ def read_json(json_file, out_dir):
                     label = v
                 break
         if not label:
-            label = "Nonscene"
             continue
         sentences.append(content["text"][sent["begin"]:sent["end"]])
-        indices.append((sent["begin"],sent["end"]))
+        indices.append((sent["begin"], sent["end"]))
 
         labels.append(label)
     all_labels.extend(labels)
     print(json_file, Counter(labels))
     split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
     with open(os.path.join(out_dir, split), 'a+', encoding="utf8") as outfile:
-        for index in range(0, len(sentences), batch_size):
-            batch = {"sentences": sentences[index:index + batch_size], "indices": indices[index:index + batch_size] , "labels": labels[index:index + batch_size]}
-            batch.update({"file": json_file.split("/")[-1]})
-            batch_length.append(len(" ".join(sentences[index:index + batch_size]).split()))
-            # batch = {"labels": labels[index:index + batch_size]}
-            json.dump(batch, outfile)
-            outfile.write('\n')
+        batch = {"sentences": sentences, "indices": indices, "labels": labels}
+        batch.update({"file": json_file.split("/")[-1]})
+        batch_length.append(len(" ".join(sentences).split()))
+        json.dump(batch, outfile)
+        outfile.write('\n')
     print(max(batch_length), min(batch_length))
 
 

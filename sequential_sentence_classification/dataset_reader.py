@@ -133,6 +133,7 @@ class SeqClassificationReader(DatasetReader):
             assert len(sentences) == len(additional_features)
 
         if len(sentences) > self.max_sent_per_example and self.max_sent_per_example > 0:
+
             i = len(sentences) // 2
             l1 = self.enforce_max_sent_per_example(
                     sentences[:i], None if labels is None else labels[:i],
