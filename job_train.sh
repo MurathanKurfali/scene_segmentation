@@ -10,6 +10,10 @@ module load Python/3.7.4
 
 source /cephyr/users/murathan/Alvis/deep/bin/activate
 
-
-echo "Sentence count: ${1}   length: ${2}"
-./scripts/train.sh "$1" "$2"
+if [ $# -ne 2 ]
+  then
+    echo "Illegal number of parameters"
+  else
+  echo "Sentence count: ${1}   length: ${2}"
+  ./scripts/train.sh "$1" "$2"
+fi

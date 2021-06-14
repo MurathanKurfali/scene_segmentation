@@ -6,7 +6,7 @@ from collections import Counter
 
 batch_size = 10
 
-split_dict = {"9783732522033.json": "test.jsonl", "9783732557905.json": "dev.jsonl"}
+split_dict = {"9783740950484.json": "dev.jsonl", "9783732586875.json": "test.jsonl"}
 all_labels = []
 
 
@@ -53,13 +53,12 @@ def read_json(json_file, out_dir):
 if __name__ == "__main__":
 
     raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
-    out_dir = "../data/trial"
+    out_dir = "../data/ss"
     if os.path.exists(out_dir): shutil.rmtree(out_dir)
     os.makedirs(out_dir)
 
     raw_books = [os.path.join(raw_data, l) for l in os.listdir(raw_data)]
     for book in raw_books:
-        # if "9783732557905" not in book: continue
         read_json(book, out_dir)
     total = sum(Counter(all_labels).values())
     print([(k, total / v) for k, v in Counter(all_labels).items()])

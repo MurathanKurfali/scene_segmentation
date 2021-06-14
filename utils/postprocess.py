@@ -17,9 +17,9 @@ def read_jsonlines(file_path):
 
 if __name__ == "__main__":
     pred_file_path = "../data/predictions/9783732522033.json"
-    #pred_file_path = "../data/trial/test.jsonl"
+    #pred_file_path = "../data/ss/test.jsonl"
 
-    test_file_path = "../data/trial/test.jsonl"
+    test_file_path = "../data/ss/test.jsonl"
     out_dir = "../data/output/9783732522033.json"
     original_file_path = "/home/murathan/Desktop/scene-segmentation/json/9783732522033.json"
 

@@ -14,9 +14,9 @@ export MODEL_TYPE=bert
 # export MODEL_TYPE=roberta
 
 # path to dataset files
-export TRAIN_PATH=data/trial/train.jsonl
-export DEV_PATH=data/trial/dev.jsonl
-export TEST_PATH=data/trial/test.jsonl
+export TRAIN_PATH=data/ss/train.jsonl
+export DEV_PATH=data/ss/dev.jsonl
+export TEST_PATH=data/ss/test.jsonl
 
 # model
 export USE_SEP=true  # true for our model. false for baseline
@@ -39,15 +39,11 @@ export USE_ABSTRACT_SCORES=false
 export SCI_SUM_FAKE_SCORES=false  # use fake scores for testing
 
 CONFIG_FILE=sequential_sentence_classification/config.jsonnet
-if [ $# -ne 2 ]
-  then
-    echo "Illegal number of parameters"
-  else
-    sent_count=$1
-    length=$2
-    out_folder="large_${sent_count}_${length}_5e"
-    rm -rf "${out_folder}"
-    export MAX_SENT_PER_EXAMPLE=${sent_count}
-    export SENT_MAX_LEN=${length}
-    python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
-fi
+
+sent_count=$1
+length=$2
+out_folder="large_${sent_count}_${length}_5e"
+rm -rf "${out_folder}"
+export MAX_SENT_PER_EXAMPLE=${sent_count}
+export SENT_MAX_LEN=${length}
+python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
