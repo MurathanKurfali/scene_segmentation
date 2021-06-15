@@ -54,11 +54,11 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
         gold_labels[boundary[0]] = label_to_int[boundary[1]]
 
     int_to_labels = {value: key for key, value in label_to_int.items()}
-
-    info(classification_report(y_true=gold_labels, y_pred=pred_labels,
-                               target_names=[int_to_labels[i] for i in range(1, len(int_to_labels))],
-                               labels=[1, 2, 3]))
-    info(confusion_matrix(y_true=gold_labels, y_pred=pred_labels, labels=[1, 2, 3]))
+    if False:
+        info(classification_report(y_true=gold_labels, y_pred=pred_labels,
+                                   target_names=[int_to_labels[i] for i in range(1, len(int_to_labels))],
+                                   labels=[1, 2, 3]))
+        info(confusion_matrix(y_true=gold_labels, y_pred=pred_labels, labels=[1, 2, 3]))
 
     return classification_report(y_true=gold_labels, y_pred=pred_labels,
                                  target_names=[int_to_labels[i] for i in range(1, len(int_to_labels))],
@@ -89,7 +89,8 @@ if __name__ == '__main__':
     gold_dir = Path("/home/murathan/Desktop/scene-segmentation/json") if "home/" in os.getcwd() else  Path("/cephyr/users/murathan/Alvis/scene-segmentation/json")
     pred_path="data/predictions"
     for d in os.listdir(pred_path):
-        pred_dir = Path(os.listdir(pred_path, d))
+        print(d)
+        pred_dir = Path(os.path.join(pred_path, d))
         eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
 
     print()
