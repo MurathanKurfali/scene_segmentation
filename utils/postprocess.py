@@ -3,6 +3,7 @@ import json
 import os
 
 import jsonlines
+import sys
 from preprocess import test_file
 
 
@@ -16,7 +17,7 @@ def read_jsonlines(file_path):
 
 if __name__ == "__main__":
     pred_file_path = sys.argv[1] # "data/predictions/{}.pred".format(test_file)
-    out_file = sys.argv[1].replace(".pred","")
+    out_file = pred_file_path.replace(".pred","")
     raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
 
     original_file_path = "{}/{}".format(raw_data, test_file)
