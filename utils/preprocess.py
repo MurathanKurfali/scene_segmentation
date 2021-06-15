@@ -37,7 +37,7 @@ def read_json(json_file, out_dir):
     all_labels.extend(labels)
     print(json_file, Counter(labels))
     split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
-    with open(os.path.join(out_dir, split), 'w', encoding="utf8") as outfile:
+    with open(os.path.join(out_dir, split), 'a+', encoding="utf8") as outfile:
         batch = {"sentences": sentences, "indices": indices, "labels": labels, "file": json_file.split("/")[-1]}
         json.dump(batch, outfile)
         outfile.write('\n')
