@@ -15,8 +15,8 @@ def read_jsonlines(file_path):
 
 
 if __name__ == "__main__":
-    pred_file_path = "data/predictions/{}.pred".format(test_file)
-    out_file = "data/predictions/{}".format(test_file)
+    pred_file_path = sys.argv[1] # "data/predictions/{}.pred".format(test_file)
+    out_file = sys.argv[1].replace(".pred","")
     raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
 
     original_file_path = "{}/{}".format(raw_data, test_file)

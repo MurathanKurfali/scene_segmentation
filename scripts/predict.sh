@@ -39,9 +39,11 @@ export SCI_SUM=false
 export USE_ABSTRACT_SCORES=false
 export SCI_SUM_FAKE_SCORES=false  # use fake scores for testing
 
-predict_file=data/predictions/9783732586875.json.pred
 model=$1
-python -m allennlp predict ${model} data/ss/test.jsonl --output-file ${predict_file}  --use-dataset-reader --predictor SeqClassificationPredictor --include-package sequential_sentence_classification
+output_file=data/predictions/${model}
+mkdir ${output_file}
+output_file="${output_file}/9783732586875.json.pred"
+python -m allennlp predict ${model} data/ss/test.jsonl --output-file ${output_file}  --use-dataset-reader --predictor SeqClassificationPredictor --include-package sequential_sentence_classification
 sleep 1
-python utils/postprocess.py
-python utils/eval.py
+python utils/postprocess.py ${output_file}
+#python utils/eval.py
