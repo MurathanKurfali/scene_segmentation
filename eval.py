@@ -1,5 +1,4 @@
 import json
-import os
 from collections import deque, defaultdict
 import logging
 from logging import info
@@ -9,8 +8,6 @@ from typing import Dict
 
 import numpy as np
 from sklearn.metrics import f1_score, classification_report, confusion_matrix
-
-from preprocess import test_file
 
 logging.getLogger().setLevel(logging.DEBUG)
 
@@ -38,7 +35,7 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
 
             prev_typ = typ
 
-    # logging.debug(pformat(boundaries))
+    logging.debug(pformat(boundaries))
 
     label_to_int = defaultdict(lambda: len(label_to_int))
     label_to_int["NOBORDER"] = 0
@@ -49,11 +46,10 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
 
     for boundary in boundaries["pred"]:
         pred_labels[boundary[0]] = label_to_int[boundary[1]]
-
     for boundary in boundaries["gold"]:
         gold_labels[boundary[0]] = label_to_int[boundary[1]]
-
     int_to_labels = {value: key for key, value in label_to_int.items()}
+
     info(classification_report(y_true=gold_labels, y_pred=pred_labels,
                                target_names=[int_to_labels[i] for i in range(1, len(int_to_labels))],
                                labels=[1, 2, 3]))
@@ -69,9 +65,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
     f1_scores = []
 
     for gold_file in gold_dir.iterdir():
-        # if test_file.split(".json")[0] not in str(gold_file): continue
         pred_file = pred_dir.joinpath(gold_file.name)
-        print(pred_file)
         if not pred_file.is_file():
             raise RuntimeError(
                 "Missing annotations for file %s! Please write all predictions to the folder `/predictions` with the same "
@@ -85,7 +79,9 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 
 if __name__ == '__main__':
-    gold_dir = Path("/home/murathan/Desktop/scene-segmentation/json") if "home/" in os.getcwd() else Path("/cephyr/users/murathan/Alvis/scene-segmentation/json")
-    pred_path = Path("data/predictions")
     gold_dir = Path("data/test")
-    eval_folder(gold_dir=gold_dir, pred_dir=pred_path)
+    pred_dir = Path("predictions")
+
+    eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
+
+    print()

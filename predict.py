@@ -15,7 +15,7 @@ def reset_folder(folder_path):
 if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
-    pred_folder = "data/predictions"
+    pred_folder = "predictions"
     model_file = "model"
 
     test_files = sorted(os.listdir("data/test"))
