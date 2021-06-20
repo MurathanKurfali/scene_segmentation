@@ -46,4 +46,4 @@ out_folder="large_${sent_count}_${length}_5e"
 rm -rf "${out_folder}"
 export MAX_SENT_PER_EXAMPLE=${sent_count}
 export SENT_MAX_LEN=${length}
-python -m allennlp train $CONFIG_FILE   --include-package sequential_sentence_classification -s  ${out_folder}
+python -m allennlp train $CONFIG_FILE --include-package sequential_sentence_classification -s  ${out_folder}
