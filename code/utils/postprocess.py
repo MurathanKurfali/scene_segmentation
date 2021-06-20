@@ -1,6 +1,5 @@
 import itertools
 import json
-
 import jsonlines
 import sys
 

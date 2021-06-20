@@ -4,8 +4,7 @@ tmp
 .vscode
 ebooks/
 data/*
-ebooks/
 xx/
-.idea/
+.idea
 model/
 predictions/
