@@ -10,7 +10,7 @@ split_dict = {"9783732557905.json": "dev.jsonl", test_file: "test.jsonl"}
 all_labels = []
 
 
-def read_json(json_file, out_dir):
+def read_json(json_file, out_dir, split=None):
     content = json.load(open(json_file, ))
     sentences, labels, indices = [], [], []
     selected = {"Scene": [], "Nonscene": []}
@@ -36,7 +36,9 @@ def read_json(json_file, out_dir):
         labels.append(label)
     all_labels.extend(labels)
     print(json_file, Counter(labels))
-    split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
+    if not split:
+        split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
+
     with open(os.path.join(out_dir, split), 'a+', encoding="utf8") as outfile:
         batch = {"sentences": sentences, "indices": indices, "labels": labels, "file": json_file.split("/")[-1]}
         json.dump(batch, outfile)

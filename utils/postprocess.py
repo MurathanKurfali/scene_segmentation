@@ -1,10 +1,8 @@
 import itertools
 import json
-import os
 
 import jsonlines
 import sys
-from preprocess import test_file
 
 
 def read_jsonlines(file_path):
@@ -15,19 +13,15 @@ def read_jsonlines(file_path):
     return content
 
 
-if __name__ == "__main__":
-    pred_file_path = sys.argv[1] # "data/predictions/{}.pred".format(test_file)
-    out_file = pred_file_path.replace(".pred","")
-    raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
+def post_process(original_file_path, pred_file_path):
+    out_file = pred_file_path.replace(".pred", "")
 
-    original_file_path = "{}/{}".format(raw_data, test_file)
-
-    original_file = json.load(open(original_file_path))
+    original_file = json.load(open(original_file_path, ))
     pred = read_jsonlines(pred_file_path)
     labels = list(itertools.chain(*[line["labels"] for line in pred]))
-    indicies = [(line["begin"], line["end"]) for line in original_file["sentences"]]
+    indexes = [(line["begin"], line["end"]) for line in original_file["sentences"]]
     scenes = []
-    labels = list(zip(labels, indicies))
+    labels = list(zip(labels, indexes))
     group = {}
     last_border = 0
     for i, label_offset in enumerate(labels):
@@ -54,7 +48,10 @@ if __name__ == "__main__":
                     group = [offset]
                     last_border = scenes[-1]["end"]
                     prev_l = label.replace("-B", "")
-    print(scenes)
     output = {"text": original_file["text"], "scenes": scenes}
-
     json.dump(output, open(out_file, "w"))
+
+
+if __name__ == "__main__":
+    pred_file_path = sys.argv[1]  # "data/predictions/{}.pred".format(test_file)
+    original_file_path = sys.argv[2]

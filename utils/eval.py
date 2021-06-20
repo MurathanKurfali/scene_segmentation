@@ -38,7 +38,7 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
 
             prev_typ = typ
 
-    #logging.debug(pformat(boundaries))
+    # logging.debug(pformat(boundaries))
 
     label_to_int = defaultdict(lambda: len(label_to_int))
     label_to_int["NOBORDER"] = 0
@@ -69,9 +69,9 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
     f1_scores = []
 
     for gold_file in gold_dir.iterdir():
-        if test_file.split(".json")[0] not in str(gold_file): continue
+        # if test_file.split(".json")[0] not in str(gold_file): continue
         pred_file = pred_dir.joinpath(gold_file.name)
-
+        print(pred_file)
         if not pred_file.is_file():
             raise RuntimeError(
                 "Missing annotations for file %s! Please write all predictions to the folder `/predictions` with the same "
@@ -85,11 +85,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 
 if __name__ == '__main__':
-    gold_dir = Path("/home/murathan/Desktop/scene-segmentation/json") if "home/" in os.getcwd() else  Path("/cephyr/users/murathan/Alvis/scene-segmentation/json")
-    pred_path="data/predictions"
-    for d in os.listdir(pred_path):
-        print(d)
-        pred_dir = Path(os.path.join(pred_path, d))
-        eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
-
-    print()
+    gold_dir = Path("/home/murathan/Desktop/scene-segmentation/json") if "home/" in os.getcwd() else Path("/cephyr/users/murathan/Alvis/scene-segmentation/json")
+    pred_path = Path("data/predictions")
+    gold_dir = Path("data/test")
+    eval_folder(gold_dir=gold_dir, pred_dir=pred_path)
