@@ -20,12 +20,11 @@ if __name__ == "__main__":
 
     test_files = sorted(os.listdir("data/test"))
     reset_folder(temp_folder)
-    reset_folder(pred_folder)
 
     for test_file in test_files:
         read_json(os.path.join(test_folder, test_file), temp_folder, split=test_file)
         print("#" * 10, "predicting: ", test_file)
-        subprocess.run('scripts/predict.sh {} {} {}'.format(model_file, str(os.path.join(temp_folder, test_file)), test_file), shell=True)
+        subprocess.run('code/scripts/predict.sh {} {} {}'.format(model_file, str(os.path.join(temp_folder, test_file)), test_file), shell=True)
         predicted_file_tmp_dir = os.path.join(pred_folder, test_file + ".pred")
         print("post-processing")
         post_process(os.path.join(test_folder, test_file), predicted_file_tmp_dir)
