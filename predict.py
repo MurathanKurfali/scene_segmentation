@@ -32,7 +32,6 @@ if __name__ == "__main__":
                        shell=True)
         print("post-processing")
         post_process(test_file_path, predicted_file_path)
-        os.remove(predicted_file_path)
+        #os.remove(predicted_file_path)
         print("done" + "#" * 15)
-        break
     # shutil.rmtree(temp_folder)
