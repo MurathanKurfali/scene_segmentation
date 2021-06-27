@@ -22,7 +22,7 @@ class SeqClassificationPredictor(Predictor):
             idx = output['action_probs'].argmax(axis=1).tolist()
             labels = [self._model.vocab.get_token_from_index(i, namespace='labels') for i in idx]
             pred_labels.extend(labels)
-        assert len(pred_labels) == len(sentences) -1
+        assert len(pred_labels) == len(sentences)
         print("*** F-score: ", f1_score(gold_labels, pred_labels, average="macro"))
         preds = list(zip(sentences, pred_labels))
         print("xxxx", preds)
