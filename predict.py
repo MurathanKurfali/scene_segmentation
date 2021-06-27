@@ -18,17 +18,19 @@ if __name__ == "__main__":
     pred_folder = "predictions"
     model_file = "model/model.tar.gz"
 
-    test_files = [os.path.join(test_folder, f) for f in sorted(os.listdir("data/test"))]
+    test_files = sorted(os.listdir("data/test"))
     reset_folder(temp_folder)
-    for test_file_path in test_files:
+    for test_file in test_files:
+        test_file_path = "{}/{}".format(test_folder, test_file)
+        tmp_file_path = "{}/{}".format(temp_folder, test_file + "l")
+        predicted_file_path = "{}/{}".format(pred_folder, test_file + ".pred")
         read_json(test_file_path, temp_folder, use_filename_as_split=True)
 
-        subprocess.run('code/scripts/predict.sh {} {} {}'.format(model_file, test_file_path.replace("test", "tmp").replace("json", "jsonl"), test_file_path.replace("data/test", pred_folder)),
+        subprocess.run('code/scripts/predict.sh {} {} {}'.format(model_file, tmp_file_path, predicted_file_path),
                        shell=True)
-        predicted_file_tmp_dir = test_file_path.replace("data/test", pred_folder) + ".pred"
         print("post-processing")
-        post_process(test_file_path, predicted_file_tmp_dir)
-        os.remove(predicted_file_tmp_dir)
+        post_process(test_file_path, predicted_file_path)
+        os.remove(predicted_file_path)
         print("done" + "#" * 15)
         break
     # shutil.rmtree(temp_folder)

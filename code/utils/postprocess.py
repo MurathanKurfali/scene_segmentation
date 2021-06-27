@@ -48,7 +48,8 @@ def post_process(original_file_path, pred_file_path):
                     last_border = scenes[-1]["end"]
                     prev_l = label.replace("-B", "")
     output = {"text": original_file["text"], "scenes": scenes}
-    if out_file.endswith("l"): out_file = out_file[:-1]
+    if out_file.endswith("l"):
+        out_file = out_file[:-1]
     json.dump(output, open(out_file, "w"))
 
 
