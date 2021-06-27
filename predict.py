@@ -30,4 +30,4 @@ if __name__ == "__main__":
         os.remove(predicted_file_tmp_dir)
         print("done" + "#" * 15)
 
-    shutil.rmtree(temp_folder)
+    #shutil.rmtree(temp_folder)
