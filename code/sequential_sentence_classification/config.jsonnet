@@ -67,15 +67,12 @@ local boolToInt(s) =
   },
   "data_loader": {
         "batch_size": std.parseInt(std.extVar("BATCH_SIZE")),
-        "shuffle": true,
+        "shuffle": false,
   },
   "trainer": {
-    "distributed": {
-    "cuda_devices": [0, 1],
-  },
     "num_epochs": std.parseInt(std.extVar("NUM_EPOCHS")),
     "grad_clipping": 1.0,
-    "patience": 25,
+    "patience": 20,
     "validation_metric": if stringToBool(std.extVar("SCI_SUM")) then "-loss" else '+avgF',
     "cuda_device": std.parseInt(std.extVar("cuda_device")),
     "num_gradient_accumulation_steps": 4,
