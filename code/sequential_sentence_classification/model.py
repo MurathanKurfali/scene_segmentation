@@ -51,7 +51,7 @@ class SeqClassificationModel(Model):
             self.labels_are_scores = True
             self.num_labels = 1
         else:
-            self.loss = torch.nn.CrossEntropyLoss(ignore_index=-1, weight=torch.tensor([1, 46, 60, 855], dtype=torch.float), reduction='none')
+            self.loss = torch.nn.CrossEntropyLoss(ignore_index=-1, weight=torch.tensor([1, 1000, 300, 1000], dtype=torch.float), reduction='none')
             self.labels_are_scores = False
             self.num_labels = self.vocab.get_vocab_size(namespace='labels')
             # define accuracy metrics

@@ -42,7 +42,7 @@ CONFIG_FILE=sequential_sentence_classification/config.jsonnet
 
 sent_count=$1
 length=$2
-out_folder="large_${sent_count}_${length}_5e"
+out_folder="large_${sent_count}_${length}_5e-1-1000-100-1000"
 rm -rf "${out_folder}"
 export MAX_SENT_PER_EXAMPLE=${sent_count}
 export SENT_MAX_LEN=${length}
