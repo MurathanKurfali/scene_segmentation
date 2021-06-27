@@ -28,8 +28,8 @@ if __name__ == "__main__":
         subprocess.run('code/scripts/predict.sh {} {} {}'.format(model_file, str(os.path.join(temp_folder, test_file)), test_file), shell=True)
         predicted_file_tmp_dir = os.path.join(pred_folder, test_file + ".pred")
         print("post-processing")
-        post_process(os.path.join(test_folder, test_file), predicted_file_tmp_dir)
+        post_process(test_file_path, predicted_file_tmp_dir)
         os.remove(predicted_file_tmp_dir)
         print("done" + "#" * 15)
-
+        break
     #shutil.rmtree(temp_folder)
