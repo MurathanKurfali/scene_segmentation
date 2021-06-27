@@ -12,7 +12,7 @@ source /cephyr/users/murathan/Alvis/deep/bin/activate
 
 python predict.py
 
-:"
+: "
 for d in "large_"*/ ; do
     echo $d
     ./scripts/predict.sh $d
