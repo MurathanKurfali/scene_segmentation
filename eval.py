@@ -66,6 +66,8 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
     for gold_file in gold_dir.iterdir():
         pred_file = pred_dir.joinpath(gold_file.name)
+        if True and "9783845397535" not in gold_file.name:
+            continue
         if not pred_file.is_file():
             print(
                 "Missing annotations for file %s! Please write all predictions to the folder `/predictions` with the same "
@@ -81,7 +83,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 if __name__ == '__main__':
     gold_dir = Path("data/test")
-    pred_dir = Path("predictions")
+    pred_dir = Path("predictions2")
 
     eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
 

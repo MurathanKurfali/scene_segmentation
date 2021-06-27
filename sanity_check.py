@@ -36,12 +36,14 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
                     gold_file))
             continue
         original_file = read_jsonlines(gold_file)
-        pred = flatten([x["labels"] for x in read_jsonlines(pred_file)])
+        pred = list(itertools.chain(*[line["labels"] for line in read_jsonlines(pred_file)]))
         pred = [p.replace("_label", "") for p in pred]
         labels = sorted(set(original_file[0]["labels"][:len(pred)]))
+        b_labels = [i for i, l in enumerate(labels) if "-B" in l ]
         print(gold_file, labels)
         print(f1_score(original_file[0]["labels"][:len(pred)], pred, average=None, labels=labels))
-        print(f1_score(original_file[0]["labels"][:len(pred)], pred, average="weighted", labels=labels))
+        print(f1_score(original_file[0]["labels"][:len(pred)], pred, average="macro", labels=labels))
+        print(np.average(np.array(f1_score(original_file[0]["labels"][:len(pred)], pred, average=None, labels=labels))[b_labels]))
 
         print()
 

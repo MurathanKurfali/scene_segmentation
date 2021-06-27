@@ -16,9 +16,7 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
     selected = {"Scene": [], "Nonscene": []}
     scene_borders = {range(k["begin"], k["end"]): k["type"] for k in content["scenes"]}
     for sent in content["sentences"]:
-        sentence = content["text"][sent["begin"]:sent["end"]]
-        initial_punc_count = len(sentence) - len(sentence.lstrip(string.punctuation + " »"))
-        sent_begin = sent["begin"] + initial_punc_count
+        sent_begin = sent["begin"]
         label = None
         for k, v in scene_borders.items():
             if sent_begin in k:
