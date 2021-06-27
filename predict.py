@@ -20,6 +20,8 @@ if __name__ == "__main__":
 
     test_files = sorted(os.listdir("data/test"))
     reset_folder(temp_folder)
+    reset_folder(pred_folder)
+
     for test_file in test_files:
         test_file_path = "{}/{}".format(test_folder, test_file)
         tmp_file_path = "{}/{}".format(temp_folder, test_file + "l")
