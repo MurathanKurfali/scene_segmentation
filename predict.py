@@ -16,11 +16,10 @@ if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
     pred_folder = "predictions"
-    model_file = "model"
+    model_file = "model/model.tar.gz"
 
     test_files = sorted(os.listdir("data/test"))
     reset_folder(temp_folder)
-
     for test_file in test_files:
         read_json(os.path.join(test_folder, test_file), temp_folder, split=test_file)
         print("#" * 10, "predicting: ", test_file)

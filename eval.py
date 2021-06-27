@@ -35,7 +35,7 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
 
             prev_typ = typ
 
-    logging.debug(pformat(boundaries))
+    #logging.debug(pformat(boundaries))
 
     label_to_int = defaultdict(lambda: len(label_to_int))
     label_to_int["NOBORDER"] = 0

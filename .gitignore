@@ -7,4 +7,6 @@ data/*
 xx/
 .idea
 model/
+code/data
+code/large*
 predictions/
