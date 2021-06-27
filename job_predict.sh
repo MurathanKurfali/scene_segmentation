@@ -11,6 +11,7 @@ module load Python/3.7.4
 source /cephyr/users/murathan/Alvis/deep/bin/activate
 
 python predict.py
+
 :"
 for d in "large_"*/ ; do
     echo $d
