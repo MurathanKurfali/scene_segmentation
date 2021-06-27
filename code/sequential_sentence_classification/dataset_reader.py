@@ -58,8 +58,6 @@ class SeqClassificationReader(DatasetReader):
         print("end token : ", self._tokenizer.sequence_pair_end_tokens)
         print("*********************************")
 
-
-
     def _read(self, file_path: str):
         file_path = cached_path(file_path)
         with open(file_path) as f:
@@ -86,17 +84,6 @@ class SeqClassificationReader(DatasetReader):
                 labels = [np.random.rand() for _ in sentences]
             else: 
                 labels = [s if s > 0 else 0.000001 for s in json_dict["highlight_scores"]]
-
-            if self.use_abstract_scores:
-                features = []
-                if self.use_abstract_scores:
-                    if self.sci_sum_fake_scores:
-                        abstract_scores = [np.random.rand() for _ in sentences]
-                    else:
-                        abstract_scores = json_dict["abstract_scores"]
-                    features.append(abstract_scores)
-                    
-                additional_features = list(map(list, zip(*features)))  # some magic transpose function
 
             sentences, labels = self.filter_bad_sci_sum_sentences(sentences, labels)
 
