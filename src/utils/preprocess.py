@@ -4,8 +4,7 @@ import shutil
 import string
 from collections import Counter
 
-
-test_file="9783732522033.json"
+test_file = "9783732522033.json"
 split_dict = {"9783732557905.json": "dev.jsonl", test_file: "test.jsonl"}
 all_labels = []
 
@@ -16,24 +15,24 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
     selected = {"Scene": [], "Nonscene": []}
     scene_borders = {range(k["begin"], k["end"]): k["type"] for k in content["scenes"]}
     for sent in content["sentences"]:
-        sent_begin = sent["begin"]
         label = None
         for k, v in scene_borders.items():
-            if sent_begin in k:
+            if sent["begin"] in k:
                 if k not in selected[v]:
                     label = "{}-B".format(v)
                     selected[v].append(k)
                 else:
-                    label = v
+                    label = "x"
                 break
         if not label:
+            print("noo label", sent["begin"])
             continue
         sentences.append(content["text"][sent["begin"]:sent["end"]])
         indices.append((sent["begin"], sent["end"]))
-
         labels.append(label)
+    assert len(sentences) == len(labels) == len(indices)
     all_labels.extend(labels)
-    print(json_file, Counter(labels))
+    print(Counter(labels))
     if not use_filename_as_split:
         split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
     else:
@@ -48,12 +47,13 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
 if __name__ == "__main__":
 
     raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
-    out_dir = "data/ss"
+    out_dir = "../data/ss"
     if os.path.exists(out_dir): shutil.rmtree(out_dir)
     os.makedirs(out_dir)
 
-    raw_books = [os.path.join(raw_data, l) for l in os.listdir(raw_data)]
+    raw_books = sorted([os.path.join(raw_data, l) for l in os.listdir(raw_data)])
     for book in raw_books:
+        print(book)
         read_json(book, out_dir)
     total = sum(Counter(all_labels).values())
     print([(k, total / v) for k, v in Counter(all_labels).items()])

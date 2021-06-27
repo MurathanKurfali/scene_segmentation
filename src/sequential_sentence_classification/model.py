@@ -35,7 +35,10 @@ class SeqClassificationModel(Model):
 
         self.text_field_embedder = text_field_embedder
         self.vocab = vocab
-        # print( self.vocab.get_token_from_index(namespace='labels', index=0))
+        print( self.vocab.get_token_from_index(namespace='labels', index=0))
+        print( self.vocab.get_token_from_index(namespace='labels', index=1))
+        print( self.vocab.get_token_from_index(namespace='labels', index=2))
+
         self.use_sep = use_sep
         self.with_crf = with_crf
         self.sci_sum = sci_sum
@@ -51,7 +54,7 @@ class SeqClassificationModel(Model):
             self.labels_are_scores = True
             self.num_labels = 1
         else:
-            self.loss = torch.nn.CrossEntropyLoss(ignore_index=-1, weight=torch.tensor([1, 1000, 300, 1000], dtype=torch.float), reduction='none')
+            self.loss = torch.nn.CrossEntropyLoss(ignore_index=-1, weight=torch.tensor([0, 1000, 300], dtype=torch.float), reduction='none')
             self.labels_are_scores = False
             self.num_labels = self.vocab.get_vocab_size(namespace='labels')
             # define accuracy metrics

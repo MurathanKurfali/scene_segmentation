@@ -7,6 +7,6 @@ data/*
 xx/
 .idea
 model/
-code/data
-code/large*
+src/data
+src/large*
 predictions/

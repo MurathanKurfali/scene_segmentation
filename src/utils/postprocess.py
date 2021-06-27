@@ -11,7 +11,6 @@ def read_jsonlines(file_path):
             content.append(line)
     return content
 
-
 def post_process(original_file_path, pred_file_path):
     out_file = pred_file_path.replace(".pred", "")
 

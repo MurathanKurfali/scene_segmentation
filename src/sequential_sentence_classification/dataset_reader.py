@@ -65,6 +65,7 @@ class SeqClassificationReader(DatasetReader):
                 json_dict = json.loads(line)
                 instances = self.read_one_example(json_dict)
                 for instance in instances:
+                    print(instance)
                     yield instance
 
     def read_one_example(self, json_dict):
@@ -79,16 +80,7 @@ class SeqClassificationReader(DatasetReader):
         confidences = json_dict.get("confs", None)
 
         additional_features = None
-        if False and self.sci_sum:
-            if self.sci_sum_fake_scores:
-                labels = [np.random.rand() for _ in sentences]
-            else: 
-                labels = [s if s > 0 else 0.000001 for s in json_dict["highlight_scores"]]
 
-            sentences, labels = self.filter_bad_sci_sum_sentences(sentences, labels)
-
-            if len(sentences) == 0:
-                return []
 
         for sentences_loop, labels_loop, confidences_loop, additional_features_loop in  \
                 self.enforce_max_sent_per_example(sentences, labels, confidences, additional_features):
@@ -140,30 +132,7 @@ class SeqClassificationReader(DatasetReader):
         else:
             return True
 
-    def filter_bad_sci_sum_sentences(self, sentences, labels):
-        filtered_sentences = []
-        filtered_labels = []
-        if not self.predict:
-            for sentence, label in zip(sentences, labels):
-                # most sentences outside of this range are bad sentences
-                if not self.is_bad_sentence(sentence):
-                    filtered_sentences.append(sentence)
-                    filtered_labels.append(label)
-                else:
-                    filtered_sentences.append("BADSENTENCE")
-                    filtered_labels.append(0.000001)
-            sentences = filtered_sentences
-            labels = filtered_labels
-        else:
-            for sentence in sentences:
-                # most sentences outside of this range are bad sentences
-                if not self.is_bad_sentence(sentence):
-                    filtered_sentences.append(sentence)
-                else:
-                    filtered_sentences.append("BADSENTENCE")
-            sentences = filtered_sentences
 
-        return sentences, labels
 
     def text_to_instance(self,
                          sentences: List[str],
@@ -216,12 +185,9 @@ class SeqClassificationReader(DatasetReader):
             else:
                 # make the labels strings for easier identification of the neutral label
                 # probably not strictly necessary
-                if self.sci_sum:
-                    fields["labels"] = ArrayField(np.array(labels))
-                else:
-                    fields["labels"] = ListField([
-                            LabelField(str(label)+"_label") for label in labels
-                        ])
+                fields["labels"] = ListField([
+                        LabelField(str(label)+"_label") for label in labels
+                    ])
         if confidences is not None:
             fields['confidences'] = ArrayField(np.array(confidences))
         if additional_features is not None:
