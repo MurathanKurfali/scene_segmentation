@@ -70,6 +70,9 @@ local boolToInt(s) =
         "shuffle": true,
   },
   "trainer": {
+    "distributed": {
+    "cuda_devices": [0, 1],
+  },
     "num_epochs": std.parseInt(std.extVar("NUM_EPOCHS")),
     "grad_clipping": 1.0,
     "patience": 25,
