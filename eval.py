@@ -67,10 +67,11 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
     for gold_file in gold_dir.iterdir():
         pred_file = pred_dir.joinpath(gold_file.name)
         if not pred_file.is_file():
-            raise RuntimeError(
+            print(
                 "Missing annotations for file %s! Please write all predictions to the folder `/predictions` with the same "
                 "name as the input file" % str(
                     gold_file))
+            continue
         result = eval_file(gold_path=gold_file, pred_path=pred_file)
         results.append(result)
         f1_scores.append(result['macro avg']["f1-score"])
