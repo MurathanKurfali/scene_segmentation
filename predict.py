@@ -2,8 +2,8 @@ import glob
 import os
 
 import shutil
-from src.utils.preprocess import read_json
-from src.utils.postprocess import post_process
+from src_4label.utils.preprocess import read_json
+from src_4label.utils.postprocess import post_process
 import subprocess
 
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
     pred_folder = "predictions-3label"
-    src="src"
+    src="src_4label"
     listing = glob.glob('{}/large*'.format(src))
 
     for model_file in listing:

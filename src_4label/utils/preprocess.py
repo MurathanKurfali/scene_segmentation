@@ -25,8 +25,7 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
                     label = v
                 break
         if not label:
-            print("noo label", sent["begin"])
-            continue
+            label = "IGNORE"
         sentences.append(content["text"][sent["begin"]:sent["end"]])
         indices.append((sent["begin"], sent["end"]))
         labels.append(label)
