@@ -41,7 +41,7 @@ CONFIG_FILE=sequential_sentence_classification/config.jsonnet
 
 sent_count=$1
 length=$2
-out_folder="stss_${sent_count}_${length}"
+out_folder="33stss_${sent_count}_${length}"
 rm -rf "${out_folder}"
 export MAX_SENT_PER_EXAMPLE=${sent_count}
 export SENT_MAX_LEN=${length}
