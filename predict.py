@@ -42,7 +42,7 @@ if __name__ == "__main__":
                            shell=True)
             print("post-processing")
             post_process(test_file_path, tmp_file_path, predicted_file_path)
-            post_process2(test_file_path, tmp_file_path, predicted_file_path, out_file="{}/{}".format(pred_folder2, test_file + ".json"))
+            post_process2(test_file_path, tmp_file_path, predicted_file_path, out_file="{}/{}".format(pred_folder2, test_file ))
 
             # os.remove(predicted_file_path)
             print("done" + "#" * 15)
