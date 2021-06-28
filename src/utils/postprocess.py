@@ -64,6 +64,8 @@ def post_process(original_file_path, tmp_file_path, pred_file_path):
                     last_border = scenes[-1]["end"]
                     prev_l = label.replace("-B", "")
             else:
+                group.append(offset)
+                continue
                 if label == prev_l:
                     group.append(offset)
                 else:  # scene change despite lack of -B label
