@@ -3,8 +3,8 @@ import json
 import shutil
 from collections import Counter
 
-test_file = "9783732557905.json"
-split_dict = {"9783732586875.json": "dev.jsonl", test_file: "test.jsonl"}
+test_file = "9783732586875.json"
+split_dict = {"9783740941093.json": "dev.jsonl", test_file: "test.jsonl"}
 all_labels = []
 
 
@@ -30,7 +30,7 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
         labels.append(label)
     assert len(sentences) == len(labels) == len(indices)
     all_labels.extend(labels)
-    print(Counter(labels))
+    print(Counter(labels), (Counter(labels)["Scene-B"] + Counter(labels)["Nonscene-B"]))
     if not use_filename_as_split:
         split = split_dict.get(json_file.split("/")[-1], "train.jsonl")
     else:
