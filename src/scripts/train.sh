@@ -32,7 +32,6 @@ export NUM_EPOCHS=100
 
 # limit number of sentences per examples, and number of words per sentence. This is dataset dependant
 
-
 # this is for the evaluation of the summarization dataset
 export SCI_SUM=false
 export USE_ABSTRACT_SCORES=false
@@ -42,7 +41,7 @@ CONFIG_FILE=sequential_sentence_classification/config.jsonnet
 
 sent_count=$1
 length=$2
-out_folder="large_${sent_count}_${length}_5e-1-1000-300-800"
+out_folder="stss_${sent_count}_${length}"
 rm -rf "${out_folder}"
 export MAX_SENT_PER_EXAMPLE=${sent_count}
 export SENT_MAX_LEN=${length}

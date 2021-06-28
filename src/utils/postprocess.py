@@ -12,7 +12,7 @@ def read_jsonlines(file_path):
     return content
 
 
-def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=None):
+def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=None):
     if not out_file:
         out_file = pred_file_path.replace(".pred", "")
 
@@ -24,9 +24,18 @@ def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=No
     indexes = [(line[0], line[1]) for line in tmp_file_sent_boundaries[0]["indices"]]
     labels = list(zip(labels, indexes))
     scenes = []
-    for l in labels:
+    for i, l in enumerate(labels):
         if "x" not in l[0]:
-            scenes.append({"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")})
+            if i == 0:
+                entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
+            else:
+                entry["end"] = l[1][0]
+                scenes.append(entry)
+                entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
+                scenes.append(entry)
+    entry["end"] = l[1][0]
+    if entry not in scenes:
+        scenes.append(entry)
 
     output = {"text": original_file["text"], "scenes": scenes}
     if out_file.endswith("l"):
@@ -34,8 +43,9 @@ def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=No
     json.dump(output, open(out_file, "w"))
 
 
-def post_process(original_file_path, tmp_file_path, pred_file_path):
-    out_file = pred_file_path.replace(".pred", "")
+def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=None):
+    if not out_file:
+        out_file = pred_file_path.replace(".pred", "")
 
     original_file = json.load(open(original_file_path, ))
     pred = read_jsonlines(pred_file_path)
@@ -65,7 +75,6 @@ def post_process(original_file_path, tmp_file_path, pred_file_path):
                     prev_l = label.replace("-B", "")
             else:
                 group.append(offset)
-                continue
                 if label == prev_l:
                     group.append(offset)
                 else:  # scene change despite lack of -B label
@@ -80,5 +89,7 @@ def post_process(original_file_path, tmp_file_path, pred_file_path):
 
 
 if __name__ == "__main__":
-    pred_file_path = sys.argv[1]  # "data/predictions/{}.pred".format(test_file)
-    original_file_path = sys.argv[2]
+    pred_file_path = "predictions/9783845397535.json.pred"  # "data/predictions/{}.pred".format(test_file)
+    original_file_path = "data/test/9783845397535.json"
+    tmp_file = "data/tmp/9783845397535.jsonl"
+    post_process(original_file_path, tmp_file, pred_file_path)

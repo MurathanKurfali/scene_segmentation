@@ -1,11 +1,10 @@
 import os
 import json
 import shutil
-import string
 from collections import Counter
 
-test_file = "9783732522033.json"
-split_dict = {"9783732557905.json": "dev.jsonl", test_file: "test.jsonl"}
+test_file = "9783732557905.json"
+split_dict = {"9783732586875.json": "dev.jsonl", test_file: "test.jsonl"}
 all_labels = []
 
 
@@ -26,8 +25,6 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
                 break
         if not label:
             continue
-            label = "IGNORE"
-            print(label, content["text"][sent["begin"]:sent["end"]])
         sentences.append(content["text"][sent["begin"]:sent["end"]])
         indices.append((sent["begin"], sent["end"]))
         labels.append(label)
