@@ -73,7 +73,7 @@ local boolToInt(s) =
     "num_epochs": std.parseInt(std.extVar("NUM_EPOCHS")),
     "grad_clipping": 1.0,
     "patience": 20,
-    "validation_metric": if stringToBool(std.extVar("SCI_SUM")) then "-loss" else '+avgF',
+    "validation_metric": if stringToBool(std.extVar("SCI_SUM")) then "-loss" else '-avgF',
     "cuda_device": std.parseInt(std.extVar("cuda_device")),
     "num_gradient_accumulation_steps": 4,
     "optimizer": {
