@@ -16,7 +16,7 @@ def reset_folder(folder_path):
 if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
-    pred_folder = "predictions-3label"
+    pred_folder = "predictions"
     src = "src_4label"
     listing = glob.glob('{}/large*'.format(src))
 
