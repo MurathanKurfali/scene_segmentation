@@ -35,7 +35,6 @@ if __name__ == "__main__":
             test_file_path = "{}/{}".format(test_folder, test_file)
             tmp_file_path = "{}/{}".format(temp_folder, test_file + "l")
             predicted_file_path = "{}/{}".format(pred_folder, test_file + ".pred")
-            predicted_file_path2 = "{}/{}".format(pred_folder2, test_file + ".pred")
 
             read_json(test_file_path, temp_folder, use_filename_as_split=True)  ## saves to data/tmp/
 
@@ -43,7 +42,7 @@ if __name__ == "__main__":
                            shell=True)
             print("post-processing")
             post_process(test_file_path, tmp_file_path, predicted_file_path)
-            post_process2(test_file_path, tmp_file_path, predicted_file_path2)
+            post_process2(test_file_path, tmp_file_path, predicted_file_path, out_file="{}/{}".format(pred_folder2, test_file + ".json"))
 
             # os.remove(predicted_file_path)
             print("done" + "#" * 15)
