@@ -14,7 +14,7 @@ eval_one_file = None #"9783845397535"
 
 
 def eval_file(gold_path: Path, pred_path: Path) -> Dict:
-    logging.debug("Comparing files %s and %s..." % (str(gold_path), str(pred_path)))
+    print("Comparing files %s and %s..." % (str(gold_path), str(pred_path)))
 
     data = {}
     with open(str(gold_path)) as f:
@@ -79,7 +79,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
         results.append(result)
         f1_scores.append(result['macro avg']["f1-score"])
 
-    logging.info("Mean macro avg. f1 score over all files: %.2f" % np.mean(f1_scores))
+    print("Mean macro avg. f1 score over all files: %.2f" % np.mean(f1_scores))
 
 
 if __name__ == '__main__':
