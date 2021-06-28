@@ -22,11 +22,12 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
                     label = "{}-B".format(v)
                     selected[v].append(k)
                 else:
-                    label = "x"
+                    label = v
                 break
         if not label:
-            print("noo label", sent["begin"])
             continue
+            label = "IGNORE"
+            print(label, content["text"][sent["begin"]:sent["end"]])
         sentences.append(content["text"][sent["begin"]:sent["end"]])
         indices.append((sent["begin"], sent["end"]))
         labels.append(label)
