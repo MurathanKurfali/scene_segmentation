@@ -2,8 +2,8 @@ import glob
 import os
 
 import shutil
-from src_4label.utils.preprocess import read_json
-from src_4label.utils.postprocess import post_process
+from src.utils.preprocess import read_json
+from src.utils.postprocess import post_process
 import subprocess
 
 
@@ -16,8 +16,8 @@ def reset_folder(folder_path):
 if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
-    pred_folder = "predictions"
-    listing = glob.glob('src_4label/large*')
+    pred_folder = "predictions-3label"
+    listing = glob.glob('src/large*')
 
     for model_file in listing:
         model_file = "{}/model.tar.gz".format(model_file)
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         reset_folder(_pred_folder)
 
         for test_file in test_files:
-            if False and "9783845397535" not in test_file:
+            if True and "9783845397535" not in test_file:
                 continue
             test_file_path = "{}/{}".format(test_folder, test_file)
             tmp_file_path = "{}/{}".format(temp_folder, test_file + "l")
