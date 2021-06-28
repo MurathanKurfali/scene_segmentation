@@ -28,7 +28,7 @@ if __name__ == "__main__":
         reset_folder(_pred_folder)
 
         for test_file in test_files:
-            if "9783845397535" not in test_file:
+            if False and "9783845397535" not in test_file:
                 continue
             test_file_path = "{}/{}".format(test_folder, test_file)
             tmp_file_path = "{}/{}".format(temp_folder, test_file + "l")
