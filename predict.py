@@ -4,6 +4,7 @@ import os
 import shutil
 from src_4label.utils.preprocess import read_json
 from src_4label.utils.postprocess import post_process
+from postprocess2 import post_process
 import subprocess
 
 
