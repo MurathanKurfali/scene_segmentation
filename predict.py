@@ -16,16 +16,19 @@ def reset_folder(folder_path):
 if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
-    pred_folder = "predictions"
-    pred_folder2 = "predictions2"
+    main_pred_folder = "predictions"
+    main_pred_folder2 = "predictions2"
 
-    listing = glob.glob('src/large*')
+    listing = glob.glob('src/stss_*')
 
     for model_file in listing:
         model_file = "{}/model.tar.gz".format(model_file)
         print("**********", model_file)
         test_files = sorted(os.listdir("data/test"))
         reset_folder(temp_folder)
+        pred_folder = model_file.split("/")[1] + "_"+ main_pred_folder
+        pred_folder2 = model_file.split("/")[1] + "_" + main_pred_folder2
+
         reset_folder(pred_folder)
         reset_folder(pred_folder2)
 
