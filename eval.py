@@ -1,17 +1,16 @@
 import glob
 import json
-from collections import deque, defaultdict
 import logging
+from collections import deque, defaultdict
 from logging import info
 from pathlib import Path
-from pprint import pprint, pformat
 from typing import Dict
 
 import numpy as np
-from sklearn.metrics import f1_score, classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix
 
 logging.getLogger().setLevel(logging.DEBUG)
-
+eval_one_file="9783845397535"
 
 def eval_file(gold_path: Path, pred_path: Path) -> Dict:
     logging.debug("Comparing files %s and %s..." % (str(gold_path), str(pred_path)))
@@ -67,7 +66,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
     for gold_file in gold_dir.iterdir():
         pred_file = pred_dir.joinpath(gold_file.name)
-        if False and "9783845397535" not in gold_file.name:
+        if eval_one_file and eval_one_file not in gold_file.name:
             continue
         if not pred_file.is_file():
             print(

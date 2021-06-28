@@ -1,19 +1,13 @@
 import glob
-import json
-from collections import deque, defaultdict
-import logging
-from logging import info
-from pathlib import Path
-from pprint import pprint, pformat
-from typing import Dict
 import itertools
-import json
-import jsonlines
-import sys
+import logging
+from pathlib import Path
 
+import jsonlines
 import numpy as np
-from nltk import flatten
-from sklearn.metrics import f1_score, classification_report, confusion_matrix
+from sklearn.metrics import f1_score
+
+from eval import eval_one_file
 
 logging.getLogger().setLevel(logging.DEBUG)
 
@@ -30,6 +24,8 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
     for gold_file in gold_dir.iterdir():
         pred_file = pred_dir.joinpath(gold_file.name.replace("jsonl", "json.pred"))
+        if eval_one_file and eval_one_file not in gold_file.name:
+            continue
         if not pred_file.is_file():
             print(
                 "Missing annotations for file %s! Please write all predictions to the folder `/predictions` with the same "
