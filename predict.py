@@ -17,7 +17,8 @@ if __name__ == "__main__":
     test_folder = "data/test"
     temp_folder = "data/tmp"
     pred_folder = "predictions-3label"
-    listing = glob.glob('src/large*')
+    src="src"
+    listing = glob.glob('{}/large*'.format(src))
 
     for model_file in listing:
         model_file = "{}/model.tar.gz".format(model_file)
@@ -35,7 +36,7 @@ if __name__ == "__main__":
             predicted_file_path = "{}/{}".format(_pred_folder, test_file + ".pred")
             read_json(test_file_path, temp_folder, use_filename_as_split=True)
 
-            subprocess.run('src_4label/scripts/predict.sh {} {} {}'.format(model_file, tmp_file_path, predicted_file_path),
+            subprocess.run('{}/scripts/predict.sh {} {} {}'.format(src, model_file, tmp_file_path, predicted_file_path),
                            shell=True)
             print("post-processing")
             post_process(test_file_path, predicted_file_path)
