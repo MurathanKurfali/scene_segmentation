@@ -11,13 +11,16 @@ def read_jsonlines(file_path):
             content.append(line)
     return content
 
-def post_process(original_file_path, pred_file_path):
+
+def post_process(original_file_path, tmp_file_path, pred_file_path):
     out_file = pred_file_path.replace(".pred", "")
 
     original_file = json.load(open(original_file_path, ))
     pred = read_jsonlines(pred_file_path)
     labels = list(itertools.chain(*[line["labels"] for line in pred]))
-    indexes = [(line["begin"], line["end"]) for line in original_file["sentences"]]
+    tmp_file_sent_boundaries = read_jsonlines(tmp_file_path)
+
+    indexes = [(line[0], line[1]) for line in tmp_file_sent_boundaries[0]["indices"]]
     scenes = []
     labels = list(zip(labels, indexes))
     group = {}

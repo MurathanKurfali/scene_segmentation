@@ -10,7 +10,8 @@ import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
 
 logging.getLogger().setLevel(logging.DEBUG)
-eval_one_file="9783845397535"
+eval_one_file = "9783845397535"
+
 
 def eval_file(gold_path: Path, pred_path: Path) -> Dict:
     logging.debug("Comparing files %s and %s..." % (str(gold_path), str(pred_path)))
@@ -35,7 +36,7 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
 
             prev_typ = typ
 
-    #logging.debug(pformat(boundaries))
+    # logging.debug(pformat(boundaries))
 
     label_to_int = defaultdict(lambda: len(label_to_int))
     label_to_int["NOBORDER"] = 0
