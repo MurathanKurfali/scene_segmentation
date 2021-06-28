@@ -1,3 +1,4 @@
+import glob
 import json
 from collections import deque, defaultdict
 import logging
@@ -49,8 +50,9 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 if __name__ == '__main__':
     gold_dir = Path("data/tmp")
-    pred_dir = Path("predictions")
-
-    eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
-
-    print()
+    listing = glob.glob('predictions*/')
+    for p in listing:
+        print(p)
+        pred_dir = Path(p)
+        eval_folder(gold_dir=gold_dir, pred_dir=pred_dir)
+        print()
