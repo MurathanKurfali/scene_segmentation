@@ -67,7 +67,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
     for gold_file in gold_dir.iterdir():
         pred_file = pred_dir.joinpath(gold_file.name)
-        if True and "9783845397535" not in gold_file.name:
+        if False and "9783845397535" not in gold_file.name:
             continue
         if not pred_file.is_file():
             print(
