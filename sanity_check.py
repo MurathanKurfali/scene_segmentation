@@ -46,7 +46,7 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
 
 if __name__ == '__main__':
     gold_dir = Path("data/tmp")
-    listing = glob.glob('predictions/')
+    listing = glob.glob('predictions*/')
     for p in listing:
         print(p)
         pred_dir = Path(p)
