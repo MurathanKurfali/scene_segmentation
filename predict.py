@@ -26,7 +26,7 @@ if __name__ == "__main__":
         print("**********", model_file)
         test_files = sorted(os.listdir("data/test"))
         reset_folder(temp_folder)
-        pred_folder = model_file.split("/")[1] + "_"+ main_pred_folder
+        pred_folder = model_file.split("/")[1] + "_" + main_pred_folder
         pred_folder2 = model_file.split("/")[1] + "_" + main_pred_folder2
 
         reset_folder(pred_folder)
@@ -45,7 +45,7 @@ if __name__ == "__main__":
                            shell=True)
             print("post-processing")
             post_process(test_file_path, tmp_file_path, predicted_file_path)
-            post_process2(test_file_path, tmp_file_path, predicted_file_path, out_file="{}/{}".format(pred_folder2, test_file ))
+            post_process2(test_file_path, tmp_file_path, predicted_file_path, out_file="{}/{}".format(pred_folder2, test_file))
 
             # os.remove(predicted_file_path)
             print("done" + "#" * 15)

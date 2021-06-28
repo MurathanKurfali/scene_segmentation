@@ -12,7 +12,7 @@ def read_jsonlines(file_path):
     return content
 
 
-def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=None):
+def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=None):
     if not out_file:
         out_file = pred_file_path.replace(".pred", "")
 
@@ -43,7 +43,7 @@ def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=Non
     json.dump(output, open(out_file, "w"))
 
 
-def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=None):
+def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=None):
     if not out_file:
         out_file = pred_file_path.replace(".pred", "")
 
