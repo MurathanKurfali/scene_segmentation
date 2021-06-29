@@ -24,22 +24,26 @@ def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=No
     indexes = [(line[0], line[1]) for line in tmp_file_sent_boundaries[0]["indices"]]
     labels = list(zip(labels, indexes))
     scenes = []
-    for i, l in enumerate(labels):
-        if "x" not in l[0]:
-            if i == 0:
-                entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
-            else:
-                if entry:
-                    entry["end"] = l[1][0]
-                    scenes.append(entry)
+    try:
+        for i, l in enumerate(labels):
+            if "x" not in l[0]:
+                if i == 0:
                     entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
-                    scenes.append(entry)
                 else:
-                    entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
+                    if entry:
+                        entry["end"] = l[1][0]
+                        scenes.append(entry)
+                        entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
+                        scenes.append(entry)
+                    else:
+                        entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
 
-    entry["end"] = l[1][0]
-    if entry not in scenes:
-        scenes.append(entry)
+        entry["end"] = l[1][0]
+        if entry not in scenes:
+            scenes.append(entry)
+    except:
+        print(original_file_path, "could not!")
+        return
 
     output = {"text": original_file["text"], "scenes": scenes}
     if out_file.endswith("l"):
