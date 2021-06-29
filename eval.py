@@ -10,7 +10,7 @@ import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
 
 logging.getLogger().setLevel(logging.DEBUG)
-eval_one_file = None #"9783845397535"
+eval_one_file = None  # "9783845397535"
 
 
 def eval_file(gold_path: Path, pred_path: Path) -> Dict:
@@ -52,8 +52,8 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
     int_to_labels = {value: key for key, value in label_to_int.items()}
 
     print(classification_report(y_true=gold_labels, y_pred=pred_labels,
-                               target_names=[int_to_labels[i] for i in range(1, len(int_to_labels))],
-                               labels=[1, 2, 3]))
+                                target_names=[int_to_labels[i] for i in range(1, len(int_to_labels))],
+                                labels=[1, 2, 3]))
     print(confusion_matrix(y_true=gold_labels, y_pred=pred_labels, labels=[1, 2, 3]))
 
     return classification_report(y_true=gold_labels, y_pred=pred_labels,
@@ -64,6 +64,7 @@ def eval_file(gold_path: Path, pred_path: Path) -> Dict:
 def eval_folder(gold_dir: Path, pred_dir: Path):
     results = []
     f1_scores = []
+    f1_scores_weighted = []
 
     for gold_file in gold_dir.iterdir():
         pred_file = pred_dir.joinpath(gold_file.name)
@@ -78,8 +79,12 @@ def eval_folder(gold_dir: Path, pred_dir: Path):
         result = eval_file(gold_path=gold_file, pred_path=pred_file)
         results.append(result)
         f1_scores.append(result['macro avg']["f1-score"])
-
-    print("Mean macro avg. f1 score over all files: %.2f" % np.mean(f1_scores))
+        f1_scores_weighted.append(result['weighted avg']["f1-score"])
+    print("#"*10)
+    print("%s  Mean macro avg. f1 score over all files: %.2f" % (str(pred_dir), np.mean(f1_scores)))
+    print("%s  Mean Weighted avg. f1 score over all files: %.2f" % (str(pred_dir), np.mean(f1_scores_weighted)))
+    print("#"*10)
+    print()
 
 
 if __name__ == '__main__':

@@ -82,7 +82,6 @@ def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=Non
                     last_border = scenes[-1]["end"]
                     prev_l = label.replace("-B", "")
             else:
-                group.append(offset)
                 if label == prev_l:
                     group.append(offset)
                 else:  # scene change despite lack of -B label
@@ -90,6 +89,8 @@ def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=Non
                     group = [offset]
                     last_border = scenes[-1]["end"]
                     prev_l = label.replace("-B", "")
+    if group:
+        scenes.append({"begin": last_border, "end": group[-1][-1], "type": prev_l})
     output = {"text": original_file["text"], "scenes": scenes}
     if out_file.endswith("l"):
         out_file = out_file[:-1]
@@ -97,7 +98,7 @@ def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=Non
 
 
 if __name__ == "__main__":
-    pred_file_path = "predictions/9783845397535.json.pred"  # "data/predictions/{}.pred".format(test_file)
-    original_file_path = "data/test/9783845397535.json"
-    tmp_file = "data/tmp/9783845397535.jsonl"
+    pred_file_path = "33stss_20_30_predictions/9783732522033.json.pred"  # "data/predictions/{}.pred".format(test_file)
+    original_file_path = "data/test/9783732522033.json"
+    tmp_file = "data/tmp/9783732522033.jsonl"
     post_process(original_file_path, tmp_file, pred_file_path)

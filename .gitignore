@@ -1,6 +1,6 @@
 large*/
 __pycache__/
-tmp
+data/tmp
 .vscode
 ebooks/
 data/*
