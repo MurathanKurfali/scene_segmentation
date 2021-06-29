@@ -29,10 +29,14 @@ def post_process2(original_file_path, tmp_file_path, pred_file_path, out_file=No
             if i == 0:
                 entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
             else:
-                entry["end"] = l[1][0]
-                scenes.append(entry)
-                entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
-                scenes.append(entry)
+                if entry:
+                    entry["end"] = l[1][0]
+                    scenes.append(entry)
+                    entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
+                    scenes.append(entry)
+                else:
+                    entry = {"begin": l[1][0], "end": -1, "type": l[0].replace("-B", "")}
+
     entry["end"] = l[1][0]
     if entry not in scenes:
         scenes.append(entry)
