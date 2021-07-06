@@ -1,8 +1,8 @@
 import os
 
 import shutil
-from src.utils.preprocess import read_json
-from src.utils.postprocess import post_process
+from code.utils.preprocess import read_json
+from code.utils.postprocess import post_process
 import subprocess
 
 
