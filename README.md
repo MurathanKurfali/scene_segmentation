@@ -5,12 +5,10 @@ This repo has code for our paper ["Breaking the Narrative: Scene Segmentation th
 
 The easist way to run our model on your data is through Docker. Please put the novels you want segmented into the "data/test" directory following  [the shared task's JSON format](http://lsx-events.informatik.uni-wuerzburg.de/stss-2021/task.html).
 
-Then you can simply build & run the docker image using the code below:
+Then you can simply build & run the docker image by simply:
 ```
 ./build.sh
 ./run.sh
-source pip/bin/activate
-python predict.py
 ```
 The built image will be ~9 GB and the predictions will be saved in "predictions" folder.
 
