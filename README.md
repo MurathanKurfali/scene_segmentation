@@ -12,7 +12,7 @@ Then you can simply build & run the docker image using the code below:
 source pip/bin/activate
 python predict.py
 ```
-The built image will be ~9 GB and the predictions will be saved in the predictions directory.
+The built image will be ~9 GB and the predictions will be saved in "predictions" folder.
 
 ### Citing
 
