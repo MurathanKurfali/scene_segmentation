@@ -5,3 +5,4 @@ model/
 predictions/
 slurm/
 venv/
+all_data
