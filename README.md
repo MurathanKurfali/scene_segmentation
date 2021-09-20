@@ -3,7 +3,7 @@ This repo has code for our paper ["Breaking the Narrative: Scene Segmentation th
 
 ### How to run
 
-The easist way to run our model on your data is through Docker. Please put the novels you want segmented into the "data/test" directory following  [the shared task's JSON format] http://lsx-events.informatik.uni-wuerzburg.de/stss-2021/task.html).
+The easist way to run our model on your data is through Docker. Please put the novels you want segmented into the "data/test" directory following  [the shared task's JSON format](http://lsx-events.informatik.uni-wuerzburg.de/stss-2021/task.html).
 
 Then you can simply build & run the docker image using the code below:
 ```
