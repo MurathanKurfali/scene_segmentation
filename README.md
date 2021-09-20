@@ -1,5 +1,5 @@
-# <p align=center>Scene Segmentation</p>
-This repo has code for our paper ["Breaking the Narrative: Scene Segmentation through Sequential Sentence Classification"](http://lsx-events.informatik.uni-wuerzburg.de/files/stss2021/proceedings/kurfali_wiren.pdf).
+# <p align=center>Scene Segmentation through Sequential Sentence Classification</p>
+This repo has code for our paper ["Breaking the Narrative: Scene Segmentation through Sequential Sentence Classification"](http://lsx-events.informatik.uni-wuerzburg.de/files/stss2021/proceedings/kurfali_wiren.pdf) that ranked 1st at the [Shared Task on Scene Segmentation (STSS)](http://lsx-events.informatik.uni-wuerzburg.de/stss-2021/).
 
 ### How to run
 
