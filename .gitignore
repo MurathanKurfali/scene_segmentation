@@ -1,12 +1,6 @@
-large*/
 __pycache__/
-data/tmp
 .vscode
-ebooks/
-data/*
-xx/
 .idea
-model/
-src/data
-src/large*
-predictions/
+model/*
+predictions/*
+slurm_files/*
