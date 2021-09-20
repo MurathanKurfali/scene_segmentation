@@ -9,8 +9,8 @@ Then you can simply build & run the docker image using the code below:
 ```
 ./build.sh
 ./run.sh
-(inside the container): source pip/bin/activate
-(inside the container): python predict.py
+source pip/bin/activate
+python predict.py
 ```
 The built image will be ~9 GB and the predictions will be saved in the predictions directory.
 
