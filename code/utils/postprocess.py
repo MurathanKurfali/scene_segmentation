@@ -1,5 +1,7 @@
 import itertools
 import json
+import os
+
 import jsonlines
 import sys
 
@@ -95,6 +97,7 @@ def post_process(original_file_path, tmp_file_path, pred_file_path, out_file=Non
     if out_file.endswith("l"):
         out_file = out_file[:-1]
     json.dump(output, open(out_file, "w"))
+    os.remove(pred_file_path)
 
 
 if __name__ == "__main__":

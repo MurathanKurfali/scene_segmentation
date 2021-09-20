@@ -1,6 +1,7 @@
 __pycache__/
-.vscode
-.idea
-model/*
-predictions/*
-slurm_files/*
+.vscode/
+.idea/
+model/
+predictions/
+slurm/
+venv/

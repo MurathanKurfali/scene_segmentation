@@ -62,7 +62,7 @@ RUN mkdir -p /predictions
 RUN mkdir -p /code
 
 RUN chown -R ${USER} /data
-RUN chown -R ${USER} /predictions
+#RUN chown -R ${USER} /predictions
 RUN chown -R ${USER} /code
 ## download the pretrained model
 RUN bash -c "source /pip/bin/activate && gdown --id 1yayKtOT2pGD7YQpL-r9p3D-ErMt6rVeR"
