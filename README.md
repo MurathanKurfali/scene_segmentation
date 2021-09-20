@@ -1,26 +1,23 @@
 # <p align=center>Sequential Sentence Classification</p>
-This repo has code and data for our paper ["Pretrained Language Models for Sequential Sentence Classification"](https://arxiv.org/pdf/1909.04054.pdf).
+This repo has code for our paper ["Breaking the Narrative: Scene Segmentation through Sequential Sentence Classification"](http://lsx-events.informatik.uni-wuerzburg.de/files/stss2021/proceedings/kurfali_wiren.pdf).
 
 ### How to run
 
-```
-pip install -r requirements.txt
-scripts/train.sh tmp_output_dir
-```
+The easist way to run our model on your data is through Docker. 
 
-Update the `scripts/train.sh` script with the appropriate hyperparameters and datapaths.
+/build.sh
+./run.sh
+(inside the container): source pip/bin/activate
+(inside the container): python predict.py
 
-### CSAbstrcut dataset
-
-The train, dev, test splits of the dataset are in `data/CSAbstrcut`
 ### Citing
 
 If you use the data or the model, please cite,
 ```
-@inproceedings{Cohan2019EMNLP,
-  title={Pretrained Language Models for Sequential Sentence Classification},
-  author={Arman Cohan, Iz Beltagy, Daniel King, Bhavana Dalvi, Dan Weld},
-  year={2019},
-  booktitle={EMNLP},
+@inproceedings{kurfali2021breaking,
+  title={Breaking the Narrative: Scene Segmentation through Sequential Sentence Classification},
+  author={Kurfal{\i}, Murathan and Wir{\'e}n, Mats}
+  journal={Shared Task on Scene Segmentation},
+  year={2021}
 }
 ```
