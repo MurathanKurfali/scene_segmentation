@@ -5,14 +5,12 @@ This repo has code for our paper ["Breaking the Narrative: Scene Segmentation th
 
 The easist way to run our model on your data is through Docker. 
 
+```
 ./build.sh
-
 ./run.sh
-
 (inside the container): source pip/bin/activate
-
 (inside the container): python predict.py
-
+```
 
 ### Citing
 
