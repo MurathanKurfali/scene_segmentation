@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import sys
 from collections import Counter
 
 test_file = "9783732522033.json"
@@ -44,8 +45,8 @@ def read_json(json_file, out_dir, use_filename_as_split=False):
 
 if __name__ == "__main__":
 
-    raw_data = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
-    out_dir = "../data/ss"
+    raw_data = sys.argv[1] #"/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
+    out_dir = sys.argv[2]
     if os.path.exists(out_dir): shutil.rmtree(out_dir)
     os.makedirs(out_dir)
 

@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from code.utils.preprocess import test_file
+from utils.preprocess import test_file
 
 
 def read(gold_dir: Path, ):
