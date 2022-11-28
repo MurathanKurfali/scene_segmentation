@@ -3,6 +3,5 @@ __pycache__/
 .idea/
 model/
 predictions/
-slurm/
 venv/
 all_data
