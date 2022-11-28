@@ -5,4 +5,4 @@ This repo has code for our paper ["Breaking the Narrative: Scene Segmentation th
 python utils/preprocess.py data_path output_path
 ./scripts train 25 50
 ### on slurm
-srun -A SNIC2022-22-655 -t 1-00:00:00 --gpus-per-node=V100:1 ./scripts train 25 50
+srun -A SNIC2022-22-655 -t 1-00:00:00 --gpus-per-node=V100:1 ./train.sh 25 50
