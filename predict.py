@@ -17,12 +17,11 @@ if __name__ == "__main__":
     temp_folder = "data/tmp"
     pred_folder = sys.argv[2]
     model_file = sys.argv[3]
-    test_files = sorted(os.listdir("data/test"))
 
     reset_folder(temp_folder)
     #reset_folder(pred_folder)
 
-    for test_file in test_files:
+    for test_file in sorted(os.listdir(test_folder)):
         test_file_path = "{}/{}".format(test_folder, test_file)
         tmp_file_path = "{}/{}".format(temp_folder, test_file + "l")
         predicted_file_path = "{}/{}".format(pred_folder, test_file + ".pred")
