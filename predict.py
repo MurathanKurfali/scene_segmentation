@@ -4,7 +4,7 @@ import shutil
 from utils.preprocess import read_json
 from utils.postprocess import post_process
 import subprocess
-
+import sys
 
 def reset_folder(folder_path):
     if os.path.exists(folder_path):
@@ -13,10 +13,10 @@ def reset_folder(folder_path):
 
 
 if __name__ == "__main__":
-    test_folder = "data/test"
+    test_folder = sys.argv[1]
     temp_folder = "data/tmp"
-    pred_folder = "predictions"
-    model_file = "model.tar.gz"
+    pred_folder = sys.argv[2]
+    model_file = sys.argv[3]
     test_files = sorted(os.listdir("data/test"))
 
     reset_folder(temp_folder)
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
         read_json(test_file_path, temp_folder, use_filename_as_split=True)  ## saves to data/tmp/
 
-        subprocess.run('code/scripts/predict.sh {} {} {}'.format(model_file, tmp_file_path, predicted_file_path),
+        subprocess.run('scripts/predict.sh {} {} {}'.format(model_file, tmp_file_path, predicted_file_path),
                        shell=True)
         print("post-processing")
         post_process(test_file_path, tmp_file_path, predicted_file_path)
