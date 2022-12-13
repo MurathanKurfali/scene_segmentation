@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
         read_json(test_file_path, temp_folder, use_filename_as_split=True)  ## saves to data/tmp/
 
-        subprocess.run('scripts/predict.sh {} {} {}'.format(model_file, tmp_file_path, predicted_file_path),
+        subprocess.run('predict.sh {} {} {}'.format(model_file, tmp_file_path, predicted_file_path),
                        shell=True)
         print("post-processing")
         post_process(test_file_path, tmp_file_path, predicted_file_path)
