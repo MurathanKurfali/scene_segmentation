@@ -19,7 +19,7 @@ if __name__ == "__main__":
     model_file = sys.argv[3]
 
     reset_folder(temp_folder)
-    #reset_folder(pred_folder)
+    reset_folder(pred_folder)
 
     for test_file in sorted(os.listdir(test_folder)):
         test_file_path = "{}/{}".format(test_folder, test_file)
