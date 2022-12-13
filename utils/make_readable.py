@@ -1,12 +1,12 @@
 import json, sys
 from pathlib import Path
-from utils.preprocess import test_file
+#from utils.preprocess import test_file
 
 
 def read(gold_dir: Path, ):
     for gold_file in gold_dir.iterdir():
         if ".pred" in gold_file.name: continue
-        if test_file not in gold_file.name: continue
+        #if test_file not in gold_file.name: continue
         print("--" * 10, gold_file.name)
         with open(str(gold_file)) as f:
 
