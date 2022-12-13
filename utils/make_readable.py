@@ -1,5 +1,4 @@
-import json
-import os
+import json, sys
 from pathlib import Path
 from utils.preprocess import test_file
 
@@ -20,7 +19,7 @@ def read(gold_dir: Path, ):
 
 
 if __name__ == '__main__':
-    json_path = "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
+    json_path = sys.argv[1] # "/home/murathan/Desktop/scene-segmentation/json" if "home/" in os.getcwd() else "/cephyr/users/murathan/Alvis/scene-segmentation/json"
     #json_path = "33stss_20_30_predictions"
     json_dir = Path(json_path)
     read(json_dir)
